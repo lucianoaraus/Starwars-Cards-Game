@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+html,
+body {
+  height: 92vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat:wght@300", sans-serif;
+  background: #f0f4fb;
+}
+
+.card-image {
+  width: 200px;
+  height: 200px;
+}

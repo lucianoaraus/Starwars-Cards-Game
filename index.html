@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css">
+
+    <title>C8</title>
+  </head>
+  <body>
+    <div class="content">
+      <div class="top">
+        <h1>Bienvenido al Simulador de Batalla de Star Wars en JavaScript...</h1>
+        <p>Preparate para luchar con adversarios de toda la Galaxia! 🌌</p>
+        <h2>Instrucciones</h2>
+        <p> 
+          1. Selecciona tu campeon.
+          <br>
+          2. Selecciona a tu adversario.
+          <br>
+          3. Usa la funcion atacar(enemigo) o usarHabilidad() o bien habilidadEspecial() que solo algunos tienen...
+          </p>
+      </div>
+
+      <hr />
+
+      <div class="Selection">
+        <h2>Elige a tu campeon, joven padawan...</h2>
+        <!-- Despues de elegir el J1, elige el J2 -> Se actualiza con JS -->
+        <br />
+
+        <div id="content">
+
+          <div class="card">
+            <img
+              class="card-image"
+              src="./assets/yoda.png"
+              id="yoda-image"
+            />
+            <div class="card-content">
+              <h2 class="card-title">Maestro Yoda</h2>
+              <span class="card-info">Ataque 110 | Vida 1500 | Luz</span>
+              <button class="seleccionar" id="yoda-button" onClick="buscarJugadores(this.id)"
+                >Seleccionar</button
+              >
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              class="card-image"
+              src="./assets/luke.jpg"
+              id="luke-image"
+            />
+            <div class="card-content">
+              <h2 class="card-title">Luke Skywalker</h2>
+              <span class="card-info">Ataque 120 | Vida 1100 | Luz</span>
+              <button class="seleccionar" id="luke-button"onClick="buscarJugadores(this.id)"
+                >Seleccionar</button
+              >
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              class="card-image"
+              src="./assets/leia.jpg"
+              id="leia-image"
+            />
+            <div class="card-content">
+              <h2 class="card-title">Princesa Leia</h2>
+              <span class="card-info">Ataque 90 | Vida 1000 | Luz</span>
+              <button class="seleccionar" id="leia-button"onClick="buscarJugadores(this.id)"
+                >Seleccionar</button
+              >
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              class="card-image"
+              src="./assets/vader.jpg"
+              id="vader-image"
+            />
+            <div class="card-content">
+              <h2 class="card-title">Darth Vader</h2>
+              <span class="card-info">Ataque 150 | Vida 1200 | Oscuridad</span>
+              <button class="seleccionar" id="vader-button"onClick="buscarJugadores(this.id)"
+                >Seleccionar</button
+              >
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              class="card-image"
+              src="./assets/obi-wan.jpg"
+              id="obi-wan-image"
+            />
+            <div class="card-content">
+              <h2 class="card-title">Obi Wan</h2>
+              <span class="card-info">Ataque 105 | Vida 1100 | Luz</span>
+              <button class="seleccionar" id="obi-button"onClick="buscarJugadores(this.id)"
+                >Seleccionar</button
+              >
+            </div>
+          </div>
+
+          <div class="card">
+            <img
+              class="card-image"
+              src="./assets/boba.png"
+              id="boba-image"
+            />
+            <div class="card-content">
+              <h2 class="card-title">Boba Fett</h2>
+              <span class="card-info">Ataque 100 | Vida 1100 | Oscuridad</span>
+              <button class="seleccionar" id="boba-button"onClick="buscarJugadores(this.id)"
+                >Seleccionar</button
+              >
+            </div>
+          </div>
+
+        </div>
+
+        
+        
+    <script src="/scripts/script.js"></script>
+  </body>
+</html>
