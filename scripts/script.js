@@ -93,35 +93,30 @@ let boba = new Campeon(
 );
 
 const campeones = [yoda, luke, leia, vader, obiWan, boba];
-const idCampeones = campeones.map((champ) => champ.id);
 
-//Listeners
-//let jugadorUno = document.getElementsByClassName("seleccionar");
-//console.log(jugadorUno);
-
-let jugadores = []; //i:0 = "Player 1"; i:1 = "Player 2"; TODO: Maximo 2 campeones
+let jugadores = [];
 
 function buscarJugadores(clicked_id) {
+  console.log("Player", jugadores.length, clicked_id);
   jugadores.push(campeones.find((c) => c.id == clicked_id));
-  //puede haber una condicion de carrera -> probar
   if (jugadores.length == 2) {
     startGame();
   }
 }
 
+//Forma 1
 const attack = (attacker, attacked) => {
   attacker.atacar(attacked);
 };
 
-/* function attack(attacker, attacked){
-  attacker.atacar(attacked);
-}; */
+//Forma 2
+//function attack(attacker, attacked){
+//  attacker.atacar(attacked);
+//};
 
 function startGame() {
   //TODO:
-  //- No carga correctamente las imagenes de cada campeon
-  //- No funcionan correctamente las funciones
-  //- Inicia la pelea con un ataque del P1 hacia el P2
+  //- No funcionan correctamente las funciones e inicia la pelea con un ataque del P1 hacia el P2
 
   console.log("entro");
   const content = document.querySelector("#content");
@@ -145,10 +140,13 @@ function startGame() {
   }
           </span>
           <!-- Ataque -->
-          <button onClick="${attack(playerOne, playerTwo)}">Atacar</button>
+          <button onClick="${attack(
+            playerOne,
+            playerTwo
+          )}">Atacar</button> //cambiar onClick -> asignar id y addEventListener -> onClick
 
           <!-- Habilidad -->
-          <button onClick="playerOne.usarHabilidad()">Usar Habilidad</button> 
+          <button onClick="${playerOne.usarHabilidad()}">Usar Habilidad</button> 
 
           <!-- Habilidad Especial (si tiene)-->
           <button onClick="playerOne.habilidadEspecial()">Usar Habilidad Especial</button>
@@ -180,3 +178,28 @@ function startGame() {
 
   content.parentNode.replaceChild(newContent, content);
 }
+
+//Ejecucion de scripts JQuery
+$("#yoda-button").click(function () {
+  buscarJugadores(this.id);
+});
+
+$("#luke-button").click(function () {
+  buscarJugadores(this.id);
+});
+
+$("#leia-button").click(function () {
+  buscarJugadores(this.id);
+});
+
+$("#boba-button").click(function () {
+  buscarJugadores(this.id);
+});
+
+$("#vader-button").click(function () {
+  buscarJugadores(this.id);
+});
+
+$("#obi-wan-button").click(function () {
+  buscarJugadores(this.id);
+});
