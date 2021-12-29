@@ -120,13 +120,17 @@ function startGame() {
 
   console.log("entro");
   const content = document.querySelector("#content");
-  console.log("content:", content);
   const newContent = document.createElement("div");
   const playerOne = jugadores[0];
   const playerTwo = jugadores[1];
 
   console.log(playerOne);
   console.log(playerTwo);
+
+  //definida en linea
+  const playerAttack = (p1, p2) => {
+    p1.atacar(p2);
+  };
 
   newContent.innerHTML = `
     <div id="content">
@@ -135,21 +139,16 @@ function startGame() {
         <img class="card-image" src="${playerOne.img}"/>
         <div class="card-content">
           <h2 class="card-title">${playerOne.nombre}</h2>
-          <span class="card-info">Ataque: ${playerOne.daño} | Vida: ${
-    playerOne.vida
-  }
+          <span class="card-info">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
           </span>
           <!-- Ataque -->
-          <button onClick="${attack(
-            playerOne,
-            playerTwo
-          )}">Atacar</button> //cambiar onClick -> asignar id y addEventListener -> onClick
+          <button class="ejecutar-ataque" onClick="playerAttack(playerOne,playerTwo)">Atacar</button>
 
           <!-- Habilidad -->
-          <button onClick="${playerOne.usarHabilidad()}">Usar Habilidad</button> 
+          <button class="ejecutar-habilidad">Usar Habilidad</button> 
 
           <!-- Habilidad Especial (si tiene)-->
-          <button onClick="playerOne.habilidadEspecial()">Usar Habilidad Especial</button>
+          <button class="ejecutar-habilidad-especial">Usar Habilidad Especial</button>
 
         </div>
       </div>
@@ -158,25 +157,27 @@ function startGame() {
         <img class="card-image" src="${playerTwo.img}"/>
         <div class="card-content">
           <h2 class="card-title">${playerTwo.nombre}</h2>
-          <span class="card-info">Ataque: ${playerTwo.daño} | Vida: ${
-    playerTwo.vida
-  }
+          <span class="card-info">Ataque: ${playerTwo.daño} | Vida: ${playerTwo.vida}
           </span>
           <!-- Ataque -->
-          <button onClick="${attack(playerTwo, playerOne)}">Atacar</button>
+          <button class="ejecutar-ataque">Atacar</button>
 
           <!-- Habilidad -->
-          <button onClick="playerTwo.usarHabilidad()">Usar Habilidad</button> 
+          <button class="ejecutar-habilidad">Usar Habilidad</button> 
 
           <!-- Habilidad Especial (si tiene)-->
-          <button onClick="playerTwo.habilidadEspecial()">Usar Habilidad Especial</button>
+          <button class="ejecutar-habilidad-especial">Usar Habilidad Especial</button>
 
         </div>
       </div>
     </div>
-    `;
+  `;
 
   content.parentNode.replaceChild(newContent, content);
+
+  $("#ejecutar-ataque").click(function () {
+    console.log("entro ataque");
+  });
 }
 
 //Ejecucion de scripts JQuery
@@ -200,6 +201,6 @@ $("#vader-button").click(function () {
   buscarJugadores(this.id);
 });
 
-$("#obi-wan-button").click(function () {
+$("#obi-button").click(function () {
   buscarJugadores(this.id);
 });
