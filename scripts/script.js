@@ -11,17 +11,27 @@ class Campeon {
     this.img = img;
   }
   atacar(enemigo) {
+    console.log(this.nombre, "ataco a", enemigo.nombre);
     enemigo.vida -= this.daño;
+    console.log(
+      this.nombre,
+      "LP:",
+      this.vida,
+      "|",
+      enemigo.nombre,
+      "LP:",
+      enemigo.vida
+    );
   }
   usarHabilidad() {
     if (this.bando == "Oscuridad") {
       this.daño += 150;
-      /* console.log("Daño +150");
-      console.log("Tu daño ascendio a " + this.daño); */
+      console.log(this.nombre, "Daño +150");
+      console.log("Tu daño ascendio a " + this.daño);
     } else {
       this.vida += 300;
-      /* console.log("Vida +300");
-      console.log("Tu vida ascendio a " + this.vida); */
+      console.log(this.nombre, "Vida +300");
+      console.log("Tu vida ascendio a " + this.vida);
     }
   }
 
@@ -29,15 +39,15 @@ class Campeon {
     //Si es Darth Vader o Luke, tendria una habilidad especial
     if (this.nombre == "Luke Skywalker") {
       this.vida += 750;
-      /* console.log("Usaste Habilidad Especial!");
+      console.log("Usaste Habilidad Especial!");
       console.log("Vida +750");
-      console.log("Tu vida ascendio a " + this.vida); */
+      console.log("Tu vida ascendio a " + this.vida);
     } else if (this.nombre == "Darth Vader") {
       this.daño += 1000;
-      /* console.log("Usaste Habilidad Especial!");
+      console.log("Usaste Habilidad Especial!");
       console.log("LORD ETERNO");
       console.log("Daño aumentado +1000");
-      console.log("Tu daño ascendio a " + this.daño); */
+      console.log("Tu daño ascendio a " + this.daño);
     }
   }
 }
@@ -104,20 +114,7 @@ function buscarJugadores(clicked_id) {
   }
 }
 
-//Forma 1
-const attack = (attacker, attacked) => {
-  attacker.atacar(attacked);
-};
-
-//Forma 2
-//function attack(attacker, attacked){
-//  attacker.atacar(attacked);
-//};
-
 function startGame() {
-  //TODO:
-  //- No funcionan correctamente las funciones e inicia la pelea con un ataque del P1 hacia el P2
-
   console.log("entro");
   const content = document.querySelector("#content");
   const newContent = document.createElement("div");
@@ -127,9 +124,16 @@ function startGame() {
   console.log(playerOne);
   console.log(playerTwo);
 
-  //definida en linea
   const playerAttack = (p1, p2) => {
     p1.atacar(p2);
+  };
+
+  const playerAbility = (player) => {
+    player.usarHabilidad();
+  };
+
+  const playerSpecialAbility = (player) => {
+    player.habilidadEspecial();
   };
 
   newContent.innerHTML = `
@@ -142,13 +146,13 @@ function startGame() {
           <span class="card-info">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
           </span>
           <!-- Ataque -->
-          <button class="ejecutar-ataque" onClick="playerAttack(playerOne,playerTwo)">Atacar</button>
+          <button id="ejecutar-ataque-p1">Atacar</button>
 
           <!-- Habilidad -->
-          <button class="ejecutar-habilidad">Usar Habilidad</button> 
+          <button id="ejecutar-habilidad-p1">Usar Habilidad</button> 
 
           <!-- Habilidad Especial (si tiene)-->
-          <button class="ejecutar-habilidad-especial">Usar Habilidad Especial</button>
+          <button id="ejecutar-habilidad-especial-p1">Usar Habilidad Especial</button>
 
         </div>
       </div>
@@ -160,13 +164,13 @@ function startGame() {
           <span class="card-info">Ataque: ${playerTwo.daño} | Vida: ${playerTwo.vida}
           </span>
           <!-- Ataque -->
-          <button class="ejecutar-ataque">Atacar</button>
+          <button id="ejecutar-ataque-p2">Atacar</button>
 
           <!-- Habilidad -->
-          <button class="ejecutar-habilidad">Usar Habilidad</button> 
+          <button id="ejecutar-habilidad-p2">Usar Habilidad</button> 
 
           <!-- Habilidad Especial (si tiene)-->
-          <button class="ejecutar-habilidad-especial">Usar Habilidad Especial</button>
+          <button id="ejecutar-habilidad-especial-p2">Usar Habilidad Especial</button>
 
         </div>
       </div>
@@ -175,8 +179,30 @@ function startGame() {
 
   content.parentNode.replaceChild(newContent, content);
 
-  $("#ejecutar-ataque").click(function () {
-    console.log("entro ataque");
+  //Ejecutar ataque
+  //Player 1
+  $("#ejecutar-ataque-p1").click(function () {
+    playerAttack(playerOne, playerTwo);
+  });
+
+  $("#ejecutar-habilidad-p1").click(function () {
+    playerAbility(playerOne);
+  });
+
+  $("#ejecutar-habilidad-especial-p1").click(function () {
+    playerSpecialAbility(playerOne);
+  });
+  //Player 2
+  $("#ejecutar-ataque-p2").click(function () {
+    playerAttack(playerTwo, playerOne);
+  });
+
+  $("#ejecutar-habilidad-p2").click(function () {
+    playerAbility(playerTwo);
+  });
+
+  $("#ejecutar-habilidad-especial-p2").click(function () {
+    playerSpecialAbility(playerTwo);
   });
 }
 
