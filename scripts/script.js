@@ -1,4 +1,6 @@
 //PROYECTO FINAL - Simulador de batalla Star Wars
+//TODO:
+//- Dark mode (jquery)
 
 //Constructor y funciones
 class Campeon {
@@ -48,6 +50,8 @@ class Campeon {
       console.log("LORD ETERNO");
       console.log("Daño aumentado +1000");
       console.log("Tu daño ascendio a " + this.daño);
+    } else {
+      console.log("No tiene habilidad especial");
     }
   }
 }
@@ -114,98 +118,6 @@ function buscarJugadores(clicked_id) {
   }
 }
 
-function startGame() {
-  console.log("entro");
-  const content = document.querySelector("#content");
-  const newContent = document.createElement("div");
-  const playerOne = jugadores[0];
-  const playerTwo = jugadores[1];
-
-  console.log(playerOne);
-  console.log(playerTwo);
-
-  const playerAttack = (p1, p2) => {
-    p1.atacar(p2);
-  };
-
-  const playerAbility = (player) => {
-    player.usarHabilidad();
-  };
-
-  const playerSpecialAbility = (player) => {
-    player.habilidadEspecial();
-  };
-
-  newContent.innerHTML = `
-    <div id="content">
-      <!--PlayerOne-->
-      <div class="card">
-        <img class="card-image" src="${playerOne.img}"/>
-        <div class="card-content">
-          <h2 class="card-title">${playerOne.nombre}</h2>
-          <span class="card-info">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
-          </span>
-          <!-- Ataque -->
-          <button id="ejecutar-ataque-p1">Atacar</button>
-
-          <!-- Habilidad -->
-          <button id="ejecutar-habilidad-p1">Usar Habilidad</button> 
-
-          <!-- Habilidad Especial (si tiene)-->
-          <button id="ejecutar-habilidad-especial-p1">Usar Habilidad Especial</button>
-
-        </div>
-      </div>
-      <!--PlayerTwo-->
-      <div class="card">
-        <img class="card-image" src="${playerTwo.img}"/>
-        <div class="card-content">
-          <h2 class="card-title">${playerTwo.nombre}</h2>
-          <span class="card-info">Ataque: ${playerTwo.daño} | Vida: ${playerTwo.vida}
-          </span>
-          <!-- Ataque -->
-          <button id="ejecutar-ataque-p2">Atacar</button>
-
-          <!-- Habilidad -->
-          <button id="ejecutar-habilidad-p2">Usar Habilidad</button> 
-
-          <!-- Habilidad Especial (si tiene)-->
-          <button id="ejecutar-habilidad-especial-p2">Usar Habilidad Especial</button>
-
-        </div>
-      </div>
-    </div>
-  `;
-
-  content.parentNode.replaceChild(newContent, content);
-
-  //Ejecutar ataque
-  //Player 1
-  $("#ejecutar-ataque-p1").click(function () {
-    playerAttack(playerOne, playerTwo);
-  });
-
-  $("#ejecutar-habilidad-p1").click(function () {
-    playerAbility(playerOne);
-  });
-
-  $("#ejecutar-habilidad-especial-p1").click(function () {
-    playerSpecialAbility(playerOne);
-  });
-  //Player 2
-  $("#ejecutar-ataque-p2").click(function () {
-    playerAttack(playerTwo, playerOne);
-  });
-
-  $("#ejecutar-habilidad-p2").click(function () {
-    playerAbility(playerTwo);
-  });
-
-  $("#ejecutar-habilidad-especial-p2").click(function () {
-    playerSpecialAbility(playerTwo);
-  });
-}
-
 //Ejecucion de scripts JQuery
 $("#yoda-button").click(function () {
   buscarJugadores(this.id);
@@ -230,3 +142,107 @@ $("#vader-button").click(function () {
 $("#obi-button").click(function () {
   buscarJugadores(this.id);
 });
+
+/* function gameOver(){
+  if(playerOne.vida || player){}
+} */
+
+function startGame() {
+  console.log("entro");
+  const content = document.querySelector("#content");
+  const cardInfoP1 = document.getElementById("#card-info-p1"); //Falta implementar
+  const cardInfoP2 = document.getElementById("#card-info-p2"); //Falta implementar
+  const newContent = document.createElement("div");
+  const playerOne = jugadores[0];
+  const playerTwo = jugadores[1];
+
+  console.log(playerOne);
+  console.log(playerTwo);
+
+  const playerAttack = (p1, p2) => {
+    p1.atacar(p2);
+  };
+
+  const playerAbility = (player) => {
+    player.usarHabilidad();
+  };
+
+  const playerSpecialAbility = (player) => {
+    player.habilidadEspecial();
+  };
+
+  newContent.innerHTML = `
+    <div id="content">
+      <!--PlayerOne-->
+      <div id="card-player-one" class="card">
+        <img class="card-image" src="${playerOne.img}"/>
+        <div class="card-content">
+          <h2 class="card-title">${playerOne.nombre}</h2>
+          <span class="card-info-p1">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
+          </span>
+          <!-- Ataque -->
+          <button id="ejecutar-ataque-p1">Atacar</button>
+
+          <!-- Habilidad -->
+          <button id="ejecutar-habilidad-p1">Usar Habilidad</button> 
+
+          <!-- Habilidad Especial (si tiene)-->
+          <button id="ejecutar-habilidad-especial-p1">Usar Habilidad Especial</button>
+
+        </div>
+      </div>
+      <!--PlayerTwo-->
+      <div id="card-player-two" class="card">
+        <img class="card-image" src="${playerTwo.img}"/>
+        <div class="card-content">
+          <h2 class="card-title">${playerTwo.nombre}</h2>
+          <span class="card-info">Ataque: ${playerTwo.daño} | Vida: ${playerTwo.vida}
+          </span>
+          <!-- Ataque -->
+          <button id="ejecutar-ataque-p2">Atacar</button>
+
+          <!-- Habilidad -->
+          <button id="ejecutar-habilidad-p2">Usar Habilidad</button> 
+
+          <!-- Habilidad Especial (si tiene)-->
+          <button id="ejecutar-habilidad-especial-p2">Usar Habilidad Especial</button>
+
+        </div>
+      </div>
+    </div>
+  `;
+
+  content.parentNode.replaceChild(newContent, content);
+
+  //Listeners de ataques y funciones JQuery
+  //Player 1
+  $("#ejecutar-ataque-p1").click(function () {
+    playerAttack(playerOne, playerTwo);
+    // Cambiar valores del HTML
+  });
+
+  $("#ejecutar-habilidad-p1").click(function () {
+    playerAbility(playerOne);
+    // Cambiar valores del HTML
+  });
+
+  $("#ejecutar-habilidad-especial-p1").click(function () {
+    playerSpecialAbility(playerOne);
+    // Cambiar valores del HTML
+  });
+  //Player 2
+  $("#ejecutar-ataque-p2").click(function () {
+    playerAttack(playerTwo, playerOne);
+    // Cambiar valores del HTML
+  });
+
+  $("#ejecutar-habilidad-p2").click(function () {
+    playerAbility(playerTwo);
+    // Cambiar valores del HTML
+  });
+
+  $("#ejecutar-habilidad-especial-p2").click(function () {
+    playerSpecialAbility(playerTwo);
+    // Cambiar valores del HTML
+  });
+}
