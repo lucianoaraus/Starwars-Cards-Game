@@ -24,16 +24,19 @@ class Campeon {
       "LP:",
       enemigo.vida
     );
+    return enemigo.vida;
   }
   usarHabilidad() {
     if (this.bando == "Oscuridad") {
       this.daño += 150;
       console.log(this.nombre, "Daño +150");
       console.log("Tu daño ascendio a " + this.daño);
+      return this.daño;
     } else {
       this.vida += 300;
       console.log(this.nombre, "Vida +300");
       console.log("Tu vida ascendio a " + this.vida);
+      return this.vida;
     }
   }
 
@@ -44,12 +47,14 @@ class Campeon {
       console.log("Usaste Habilidad Especial!");
       console.log("Vida +750");
       console.log("Tu vida ascendio a " + this.vida);
+      return this.vida;
     } else if (this.nombre == "Darth Vader") {
       this.daño += 1000;
       console.log("Usaste Habilidad Especial!");
       console.log("LORD ETERNO");
       console.log("Daño aumentado +1000");
       console.log("Tu daño ascendio a " + this.daño);
+      return this.daño;
     } else {
       console.log("No tiene habilidad especial");
     }
@@ -150,26 +155,12 @@ $("#obi-button").click(function () {
 function startGame() {
   console.log("entro");
   const content = document.querySelector("#content");
-  const cardInfoP1 = document.getElementById("#card-info-p1"); //Falta implementar
-  const cardInfoP2 = document.getElementById("#card-info-p2"); //Falta implementar
   const newContent = document.createElement("div");
   const playerOne = jugadores[0];
   const playerTwo = jugadores[1];
 
   console.log(playerOne);
   console.log(playerTwo);
-
-  const playerAttack = (p1, p2) => {
-    p1.atacar(p2);
-  };
-
-  const playerAbility = (player) => {
-    player.usarHabilidad();
-  };
-
-  const playerSpecialAbility = (player) => {
-    player.habilidadEspecial();
-  };
 
   newContent.innerHTML = `
     <div id="content">
@@ -179,7 +170,7 @@ function startGame() {
         <div class="card-content">
           <h2 class="card-title">${playerOne.nombre}</h2>
           <span class="card-info-p1">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
-          </span>
+</span>
           <!-- Ataque -->
           <button id="ejecutar-ataque-p1">Atacar</button>
 
@@ -196,7 +187,7 @@ function startGame() {
         <img class="card-image" src="${playerTwo.img}"/>
         <div class="card-content">
           <h2 class="card-title">${playerTwo.nombre}</h2>
-          <span class="card-info">Ataque: ${playerTwo.daño} | Vida: ${playerTwo.vida}
+          <span >Ataque: ${playerTwo.daño} | </span><span id="card-info-p2">Vida: ${playerTwo.vida}
           </span>
           <!-- Ataque -->
           <button id="ejecutar-ataque-p2">Atacar</button>
@@ -214,35 +205,86 @@ function startGame() {
 
   content.parentNode.replaceChild(newContent, content);
 
+  // Funciones para el p1
+  const player1Attack = (p1, p2) => {
+    const cardInfoP2 = document.getElementById("card-info-p2");
+    cardInfoP2.innerText = `Vida: ${p1.atacar(p2)}`;
+  };
+
+  const player1Ability = (p1) => {
+    const cardInfoP1 = document.getElementById("card-info-p1");
+    if (playerOne.bando == "Oscuridad") {
+      console.log("entro y el p1 es oscuro");
+      cardInfoP1.innerText = `Ataque: ${p1.usarHabilidad()}`;
+    } else {
+      console.log("entro y el p1 es luz");
+      cardInfoP1.innerText = `Vida: ${p1.usarHabilidad()}`;
+    }
+  };
+
+  const player1SpecialAbility = (p1) => {
+    if (playerOne.bando == "Oscuridad") {
+      const cardInfoP1 = document.getElementById("card-info-p1");
+      cardInfoP1.innerText = `Daño: ${p1.habilidadEspecial()}`;
+    } else {
+      const cardInfoP1 = document.getElementById("card-info-p1");
+      cardInfoP1.innerText = `Vida: ${p1.habilidadEspecial()}`;
+    }
+  };
+
+  // Funciones para el p2
+  const player2Attack = (p2, p1) => {
+    const cardInfoP1 = document.getElementById("card-info-p1");
+    cardInfoP1.innerText = `Vida: ${p2.atacar(p1)}`;
+  };
+
+  const player2Ability = (p1) => {
+    const cardInfoP1 = document.getElementById("card-info-p1");
+    if (playerOne.bando == "Oscuridad") {
+      console.log("entro y el p1 es oscuro");
+      cardInfoP1.innerText = `Ataque: ${p1.usarHabilidad()}`;
+    } else {
+      console.log("entro y el p1 es luz");
+      cardInfoP1.innerText = `Vida: ${p1.usarHabilidad()}`;
+    }
+  };
+
+  const player2SpecialAbility = (p1) => {
+    if (playerOne.bando == "Oscuridad") {
+      const cardInfoP1 = document.getElementById("card-info-p1");
+      cardInfoP1.innerText = `Daño: ${p1.habilidadEspecial()}`;
+    } else {
+      const cardInfoP1 = document.getElementById("card-info-p1");
+      cardInfoP1.innerText = `Vida: ${p1.habilidadEspecial()}`;
+    }
+  };
+
   //Listeners de ataques y funciones JQuery
   //Player 1
   $("#ejecutar-ataque-p1").click(function () {
-    playerAttack(playerOne, playerTwo);
-    // Cambiar valores del HTML
+    player1Attack(playerOne, playerTwo);
   });
 
   $("#ejecutar-habilidad-p1").click(function () {
-    playerAbility(playerOne);
-    // Cambiar valores del HTML
+    player1Ability(playerOne);
   });
 
   $("#ejecutar-habilidad-especial-p1").click(function () {
-    playerSpecialAbility(playerOne);
-    // Cambiar valores del HTML
+    player1SpecialAbility(playerOne);
   });
   //Player 2
   $("#ejecutar-ataque-p2").click(function () {
-    playerAttack(playerTwo, playerOne);
+    player2Attack(playerTwo, playerOne);
     // Cambiar valores del HTML
   });
 
   $("#ejecutar-habilidad-p2").click(function () {
-    playerAbility(playerTwo);
+    player2Ability(playerTwo);
     // Cambiar valores del HTML
   });
 
   $("#ejecutar-habilidad-especial-p2").click(function () {
-    playerSpecialAbility(playerTwo);
+    player2SpecialAbility(playerTwo);
     // Cambiar valores del HTML
   });
 }
