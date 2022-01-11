@@ -169,7 +169,7 @@ function startGame() {
         <img class="card-image" src="${playerOne.img}"/>
         <div class="card-content">
           <h2 class="card-title">${playerOne.nombre}</h2>
-          <span class="card-info-p1">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
+          <span id="card-info-p1">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
 </span>
           <!-- Ataque -->
           <button id="ejecutar-ataque-p1">Atacar</button>
@@ -187,7 +187,7 @@ function startGame() {
         <img class="card-image" src="${playerTwo.img}"/>
         <div class="card-content">
           <h2 class="card-title">${playerTwo.nombre}</h2>
-          <span >Ataque: ${playerTwo.daño} | </span><span id="card-info-p2">Vida: ${playerTwo.vida}
+          <span id="card-info-p2">Ataque: ${playerTwo.daño} | Vida: ${playerTwo.vida}
           </span>
           <!-- Ataque -->
           <button id="ejecutar-ataque-p2">Atacar</button>
@@ -208,54 +208,58 @@ function startGame() {
   // Funciones para el p1
   const player1Attack = (p1, p2) => {
     const cardInfoP2 = document.getElementById("card-info-p2");
-    cardInfoP2.innerText = `Vida: ${p1.atacar(p2)}`;
+    cardInfoP2.innerText = `Ataque: ${p2.daño} | Vida: ${p1.atacar(p2)}`;
   };
 
   const player1Ability = (p1) => {
     const cardInfoP1 = document.getElementById("card-info-p1");
     if (playerOne.bando == "Oscuridad") {
-      console.log("entro y el p1 es oscuro");
-      cardInfoP1.innerText = `Ataque: ${p1.usarHabilidad()}`;
+      cardInfoP1.innerText = `Ataque: ${p1.usarHabilidad()} | Vida: ${p1.vida}`;
     } else {
-      console.log("entro y el p1 es luz");
-      cardInfoP1.innerText = `Vida: ${p1.usarHabilidad()}`;
+      cardInfoP1.innerText = `Ataque: ${p1.daño} | Vida: ${p1.usarHabilidad()}`;
     }
   };
 
   const player1SpecialAbility = (p1) => {
     if (playerOne.bando == "Oscuridad") {
       const cardInfoP1 = document.getElementById("card-info-p1");
-      cardInfoP1.innerText = `Daño: ${p1.habilidadEspecial()}`;
+      cardInfoP1.innerText = `Ataque: ${p1.habilidadEspecial()} | Vida: ${
+        p1.vida
+      }`;
     } else {
       const cardInfoP1 = document.getElementById("card-info-p1");
-      cardInfoP1.innerText = `Vida: ${p1.habilidadEspecial()}`;
+      cardInfoP1.innerText = `Ataque: ${
+        p1.daño
+      } | Vida: ${p1.habilidadEspecial()}`;
     }
   };
 
   // Funciones para el p2
   const player2Attack = (p2, p1) => {
     const cardInfoP1 = document.getElementById("card-info-p1");
-    cardInfoP1.innerText = `Vida: ${p2.atacar(p1)}`;
+    cardInfoP1.innerText = `Ataque: ${p1.daño} | Vida: ${p2.atacar(p1)}`;
   };
 
-  const player2Ability = (p1) => {
-    const cardInfoP1 = document.getElementById("card-info-p1");
-    if (playerOne.bando == "Oscuridad") {
-      console.log("entro y el p1 es oscuro");
-      cardInfoP1.innerText = `Ataque: ${p1.usarHabilidad()}`;
+  const player2Ability = (p2) => {
+    const cardInfoP2 = document.getElementById("card-info-p2");
+    if (playerTwo.bando == "Oscuridad") {
+      cardInfoP2.innerText = `Ataque: ${p2.usarHabilidad()} | Vida: ${p2.vida}`;
     } else {
-      console.log("entro y el p1 es luz");
-      cardInfoP1.innerText = `Vida: ${p1.usarHabilidad()}`;
+      cardInfoP2.innerText = `Ataque: ${p2.daño} | Vida: ${p2.usarHabilidad()}`;
     }
   };
 
-  const player2SpecialAbility = (p1) => {
-    if (playerOne.bando == "Oscuridad") {
-      const cardInfoP1 = document.getElementById("card-info-p1");
-      cardInfoP1.innerText = `Daño: ${p1.habilidadEspecial()}`;
+  const player2SpecialAbility = (p2) => {
+    if (playerTwo.bando == "Oscuridad") {
+      const cardInfoP2 = document.getElementById("card-info-p2");
+      cardInfoP2.innerText = `Ataque: ${p2.habilidadEspecial()} | Vida: ${
+        p2.vida
+      }`;
     } else {
-      const cardInfoP1 = document.getElementById("card-info-p1");
-      cardInfoP1.innerText = `Vida: ${p1.habilidadEspecial()}`;
+      const cardInfoP2 = document.getElementById("card-info-p2");
+      cardInfoP2.innerText = `Ataque: ${
+        p2.daño
+      } | Vida: ${p2.habilidadEspecial()}`;
     }
   };
 
@@ -275,16 +279,13 @@ function startGame() {
   //Player 2
   $("#ejecutar-ataque-p2").click(function () {
     player2Attack(playerTwo, playerOne);
-    // Cambiar valores del HTML
   });
 
   $("#ejecutar-habilidad-p2").click(function () {
     player2Ability(playerTwo);
-    // Cambiar valores del HTML
   });
 
   $("#ejecutar-habilidad-especial-p2").click(function () {
     player2SpecialAbility(playerTwo);
-    // Cambiar valores del HTML
   });
 }
