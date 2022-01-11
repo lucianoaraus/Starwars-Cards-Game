@@ -148,10 +148,6 @@ $("#obi-button").click(function () {
   buscarJugadores(this.id);
 });
 
-/* function gameOver(){
-  if(playerOne.vida || player){}
-} */
-
 function startGame() {
   console.log("entro");
   const content = document.querySelector("#content");
@@ -162,8 +158,19 @@ function startGame() {
   console.log(playerOne);
   console.log(playerTwo);
 
+  //WIP:
+  const gameOver = (p1, p2) => {
+    if (p1.vida <= 0) {
+      console.log(playerTwo.nombre + " Gana");
+    } else if (p2.vida <= 0) {
+      console.log(playerOne.nombre + " Gana");
+    }
+  };
+
+  gameOver(playerOne, playerTwo);
+
   newContent.innerHTML = `
-    <div id="content">
+    <div id="content" style="display: none">
       <!--PlayerOne-->
       <div id="card-player-one" class="card">
         <img class="card-image" src="${playerOne.img}"/>
@@ -204,6 +211,9 @@ function startGame() {
   `;
 
   content.parentNode.replaceChild(newContent, content);
+
+  // Efecto/Animacion con JQuery
+  $("#content").fadeIn(1200);
 
   // Funciones para el p1
   const player1Attack = (p1, p2) => {
