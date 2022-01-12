@@ -178,10 +178,12 @@ function startGame() {
         <!-- Player One  -->
         <div class="col">
           <div class="card shadow-sm">
-            <img
-              class="card-image"
-              src="${playerOne.img}"
-            />
+            <div class="box-image">
+              <img
+                class="card-image"
+                src="${playerOne.img}"
+              />
+            </div>
             <div class="card-body">
               <h2 class="card-title">${playerOne.nombre}</h2>
               <p class="card-text">algo aca? 🤔</p>
@@ -229,10 +231,12 @@ function startGame() {
         <!-- Player Two  -->
         <div class="col">
           <div class="card shadow-sm">
-            <img
-              class="card-image"
-              src="${playerTwo.img}"
-            />
+            <div class="box-image">
+              <img
+                class="card-image"
+                src="${playerTwo.img}"
+              />
+            </div>
             <div class="card-body">
               <h2 class="card-title">${playerTwo.nombre}</h2>
               <p class="card-text">algo aca? 🤔</p>

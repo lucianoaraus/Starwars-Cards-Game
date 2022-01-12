@@ -14,3 +14,27 @@ body {
   width: 200px;
   height: 200px;
 }
+
+.sw-background {
+  width: 500px;
+  height: 280px;
+}
+
+.box-image {
+  display: flex;
+  justify-content: center;
+  background: #ffff;
+}
+
+h4,
+a {
+  color: #ffd000;
+}
+
+footer {
+  background: #212529;
+}
+
+footer a {
+  color: #ffd000;
+}
