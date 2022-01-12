@@ -136,11 +136,11 @@ $("#leia-button").click(function () {
   buscarJugadores(this.id);
 });
 
-$("#boba-button").click(function () {
+$("#vader-button").click(function () {
   buscarJugadores(this.id);
 });
 
-$("#vader-button").click(function () {
+$("#boba-button").click(function () {
   buscarJugadores(this.id);
 });
 
@@ -150,7 +150,8 @@ $("#obi-button").click(function () {
 
 function startGame() {
   console.log("entro");
-  const content = document.querySelector("#content");
+  const content = document.getElementById("cards-content");
+  console.log("content ->" + content);
   const newContent = document.createElement("div");
   const playerOne = jugadores[0];
   const playerTwo = jugadores[1];
@@ -170,106 +171,185 @@ function startGame() {
   gameOver(playerOne, playerTwo);
 
   newContent.innerHTML = `
-    <div id="content" style="display: none">
-      <!--PlayerOne-->
-      <div id="card-player-one" class="card">
-        <img class="card-image" src="${playerOne.img}"/>
-        <div class="card-content">
-          <h2 class="card-title">${playerOne.nombre}</h2>
-          <span id="card-info-p1">Ataque: ${playerOne.daño} | Vida: ${playerOne.vida}
-</span>
-          <!-- Ataque -->
-          <button id="ejecutar-ataque-p1">Atacar</button>
-
-          <!-- Habilidad -->
-          <button id="ejecutar-habilidad-p1">Usar Habilidad</button> 
-
-          <!-- Habilidad Especial (si tiene)-->
-          <button id="ejecutar-habilidad-especial-p1">Usar Habilidad Especial</button>
-
+  <div id="battle-cards-content" class="album py-5 bg-light" style="display: none">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        
+        <!-- Player One  -->
+        <div class="col">
+          <div class="card shadow-sm">
+            <img
+              class="card-image"
+              src="${playerOne.img}"
+            />
+            <div class="card-body">
+              <h2 class="card-title">${playerOne.nombre}</h2>
+              <p class="card-text">algo aca? 🤔</p>
+              <small class="text-muted" id="card-info-p1"
+                  >Damage: ${playerOne.daño} | Lifepoints: ${playerOne.vida}</small
+                >
+              <div
+                class="d-flex justify-content-between align-items-center"
+              >
+                <!-- Attack Button -->
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    id="ejecutar-ataque-p1"
+                  >
+                    Attack
+                  </button>
+                </div>
+                <!-- Abillity Button -->
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    id="ejecutar-habilidad-p1"
+                  >
+                    Abillity
+                  </button>
+                </div>
+                <!-- Ultimate Button -->
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    id="ejecutar-habilidad-especial-p1"
+                  >
+                    Ultimate
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <!--PlayerTwo-->
-      <div id="card-player-two" class="card">
-        <img class="card-image" src="${playerTwo.img}"/>
-        <div class="card-content">
-          <h2 class="card-title">${playerTwo.nombre}</h2>
-          <span id="card-info-p2">Ataque: ${playerTwo.daño} | Vida: ${playerTwo.vida}
-          </span>
-          <!-- Ataque -->
-          <button id="ejecutar-ataque-p2">Atacar</button>
 
-          <!-- Habilidad -->
-          <button id="ejecutar-habilidad-p2">Usar Habilidad</button> 
-
-          <!-- Habilidad Especial (si tiene)-->
-          <button id="ejecutar-habilidad-especial-p2">Usar Habilidad Especial</button>
-
+        <!-- Player Two  -->
+        <div class="col">
+          <div class="card shadow-sm">
+            <img
+              class="card-image"
+              src="${playerTwo.img}"
+            />
+            <div class="card-body">
+              <h2 class="card-title">${playerTwo.nombre}</h2>
+              <p class="card-text">algo aca? 🤔</p>
+              <small class="text-muted" id="card-info-p2"
+                  >Damage: ${playerTwo.daño} | Lifepoints: ${playerTwo.vida}</small
+                >
+              <div
+                class="d-flex justify-content-between align-items-center"
+              >
+                <!-- Attack Button -->
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    id="ejecutar-ataque-p2"
+                  >
+                    Attack
+                  </button>
+                </div>
+                <!-- Abillity Button -->
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    id="ejecutar-habilidad-p2"
+                  >
+                    Abillity
+                  </button>
+                </div>
+                <!-- Ultimate Button -->
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    id="ejecutar-habilidad-especial-p2"
+                  >
+                    Ultimate
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        
       </div>
     </div>
+  </div>
   `;
 
   content.parentNode.replaceChild(newContent, content);
 
   // Efecto/Animacion con JQuery
-  $("#content").fadeIn(1200);
+  $("#battle-cards-content").fadeIn(1000);
 
   // Funciones para el p1
   const player1Attack = (p1, p2) => {
     const cardInfoP2 = document.getElementById("card-info-p2");
-    cardInfoP2.innerText = `Ataque: ${p2.daño} | Vida: ${p1.atacar(p2)}`;
+    cardInfoP2.innerText = `Damage: ${p2.daño} | Lifepoints: ${p1.atacar(p2)}`;
   };
 
   const player1Ability = (p1) => {
     const cardInfoP1 = document.getElementById("card-info-p1");
     if (playerOne.bando == "Oscuridad") {
-      cardInfoP1.innerText = `Ataque: ${p1.usarHabilidad()} | Vida: ${p1.vida}`;
+      cardInfoP1.innerText = `Damage: ${p1.usarHabilidad()} | Lifepoints: ${
+        p1.vida
+      }`;
     } else {
-      cardInfoP1.innerText = `Ataque: ${p1.daño} | Vida: ${p1.usarHabilidad()}`;
+      cardInfoP1.innerText = `Damage: ${
+        p1.daño
+      } | Lifepoints: ${p1.usarHabilidad()}`;
     }
   };
 
   const player1SpecialAbility = (p1) => {
     if (playerOne.bando == "Oscuridad") {
       const cardInfoP1 = document.getElementById("card-info-p1");
-      cardInfoP1.innerText = `Ataque: ${p1.habilidadEspecial()} | Vida: ${
+      cardInfoP1.innerText = `Damage: ${p1.habilidadEspecial()} | Lifepoints: ${
         p1.vida
       }`;
     } else {
       const cardInfoP1 = document.getElementById("card-info-p1");
-      cardInfoP1.innerText = `Ataque: ${
+      cardInfoP1.innerText = `Damage: ${
         p1.daño
-      } | Vida: ${p1.habilidadEspecial()}`;
+      } | Lifepoints: ${p1.habilidadEspecial()}`;
     }
   };
 
   // Funciones para el p2
   const player2Attack = (p2, p1) => {
     const cardInfoP1 = document.getElementById("card-info-p1");
-    cardInfoP1.innerText = `Ataque: ${p1.daño} | Vida: ${p2.atacar(p1)}`;
+    cardInfoP1.innerText = `Damage: ${p1.daño} | Lifepoints: ${p2.atacar(p1)}`;
   };
 
   const player2Ability = (p2) => {
     const cardInfoP2 = document.getElementById("card-info-p2");
     if (playerTwo.bando == "Oscuridad") {
-      cardInfoP2.innerText = `Ataque: ${p2.usarHabilidad()} | Vida: ${p2.vida}`;
+      cardInfoP2.innerText = `Damage: ${p2.usarHabilidad()} | Lifepoints: ${
+        p2.vida
+      }`;
     } else {
-      cardInfoP2.innerText = `Ataque: ${p2.daño} | Vida: ${p2.usarHabilidad()}`;
+      cardInfoP2.innerText = `Damage: ${
+        p2.daño
+      } | Lifepoints: ${p2.usarHabilidad()}`;
     }
   };
 
   const player2SpecialAbility = (p2) => {
     if (playerTwo.bando == "Oscuridad") {
       const cardInfoP2 = document.getElementById("card-info-p2");
-      cardInfoP2.innerText = `Ataque: ${p2.habilidadEspecial()} | Vida: ${
+      cardInfoP2.innerText = `Damage: ${p2.habilidadEspecial()} | Lifepoints: ${
         p2.vida
       }`;
     } else {
       const cardInfoP2 = document.getElementById("card-info-p2");
-      cardInfoP2.innerText = `Ataque: ${
+      cardInfoP2.innerText = `Damage: ${
         p2.daño
-      } | Vida: ${p2.habilidadEspecial()}`;
+      } | Lifepoints: ${p2.habilidadEspecial()}`;
     }
   };
 
