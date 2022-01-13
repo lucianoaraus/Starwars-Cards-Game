@@ -15,6 +15,20 @@ body {
   height: 200px;
 }
 
+.card-body {
+  background: #212529;
+  border-radius: 0 0 3px 3px;
+  color: rgb(233, 233, 233);
+}
+
+.card-body p {
+  color: rgb(197, 197, 197);
+}
+
+.drop-shadow {
+  filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.35));
+}
+
 .sw-background {
   width: 500px;
   height: 280px;
@@ -24,6 +38,7 @@ body {
   display: flex;
   justify-content: center;
   background: #ffff;
+  border-radius: 5px 5px;
 }
 
 h4,

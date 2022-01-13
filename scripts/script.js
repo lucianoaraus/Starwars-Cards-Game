@@ -116,7 +116,7 @@ const campeones = [yoda, luke, leia, vader, obiWan, boba];
 let jugadores = [];
 
 function buscarJugadores(clicked_id) {
-  console.log("Player", jugadores.length, clicked_id);
+  console.log("Player", jugadores.length, jugadores[length].nombre);
   jugadores.push(campeones.find((c) => c.id == clicked_id));
   if (jugadores.length == 2) {
     startGame();
@@ -149,15 +149,12 @@ $("#obi-button").click(function () {
 });
 
 function startGame() {
-  console.log("entro");
   const content = document.getElementById("cards-content");
-  console.log("content ->" + content);
   const newContent = document.createElement("div");
   const playerOne = jugadores[0];
   const playerTwo = jugadores[1];
 
-  console.log(playerOne);
-  console.log(playerTwo);
+  console.log(jugadores);
 
   //WIP:
   const gameOver = (p1, p2) => {
@@ -176,7 +173,7 @@ function startGame() {
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         
         <!-- Player One  -->
-        <div class="col">
+        <div class="col drop-shadow">
           <div class="card shadow-sm">
             <div class="box-image">
               <img
@@ -229,7 +226,7 @@ function startGame() {
         </div>
 
         <!-- Player Two  -->
-        <div class="col">
+        <div class="col drop-shadow">
           <div class="card shadow-sm">
             <div class="box-image">
               <img
