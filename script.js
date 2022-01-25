@@ -68,7 +68,7 @@ let yoda = new Campeon(
   1500,
   "Luz",
   "yoda-button",
-  "https://raw.githubusercontent.com/lucianoaraus/DOM_Coderhouse/main/assets/yoda.png"
+  "../assets/yoda.png"
 );
 let luke = new Campeon(
   "Luke Skywalker",
@@ -76,7 +76,7 @@ let luke = new Campeon(
   1100,
   "Luz",
   "luke-button",
-  "https://raw.githubusercontent.com/lucianoaraus/DOM_Coderhouse/main/assets/luke.jpg"
+  "../assets/luke.png"
 );
 let leia = new Campeon(
   "Princesa Leia",
@@ -84,7 +84,7 @@ let leia = new Campeon(
   1000,
   "Luz",
   "leia-button",
-  "https://raw.githubusercontent.com/lucianoaraus/DOM_Coderhouse/main/assets/leia.jpg"
+  "../assets/leia.png"
 );
 let vader = new Campeon(
   "Darth Vader",
@@ -92,7 +92,7 @@ let vader = new Campeon(
   1200,
   "Oscuridad",
   "vader-button",
-  "https://raw.githubusercontent.com/lucianoaraus/DOM_Coderhouse/main/assets/vader.jpg"
+  "../assets/vader.png"
 );
 let obiWan = new Campeon(
   "Obi Wan",
@@ -100,7 +100,7 @@ let obiWan = new Campeon(
   1100,
   "Luz",
   "obi-button",
-  "https://raw.githubusercontent.com/lucianoaraus/DOM_Coderhouse/main/assets/obi-wan.jpg"
+  "../assets/obi-wan.png"
 );
 let boba = new Campeon(
   "Boba Fett",
@@ -108,7 +108,7 @@ let boba = new Campeon(
   1100,
   "Oscuridad",
   "boba-button",
-  "https://raw.githubusercontent.com/lucianoaraus/DOM_Coderhouse/main/assets/boba.png"
+  "../assets/boba.png"
 );
 
 const campeones = [yoda, luke, leia, vader, obiWan, boba];
@@ -116,7 +116,7 @@ const campeones = [yoda, luke, leia, vader, obiWan, boba];
 let jugadores = [];
 
 function buscarJugadores(clicked_id) {
-  console.log("Player", jugadores.length, jugadores[length].nombre);
+  console.log("Player", jugadores.length, clicked_id);
   jugadores.push(campeones.find((c) => c.id == clicked_id));
   if (jugadores.length == 2) {
     startGame();
@@ -170,7 +170,7 @@ function startGame() {
   newContent.innerHTML = `
   <div id="battle-cards-content" class="album py-5 bg-light" style="display: none">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 battle-cards-div">
         
         <!-- Player One  -->
         <div class="col drop-shadow">
@@ -183,7 +183,7 @@ function startGame() {
             </div>
             <div class="card-body">
               <h2 class="card-title">${playerOne.nombre}</h2>
-              <p class="card-text">algo aca? 🤔</p>
+              <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
               <small class="text-muted" id="card-info-p1"
                   >Damage: ${playerOne.daño} | Lifepoints: ${playerOne.vida}</small
                 >
@@ -194,7 +194,7 @@ function startGame() {
                 <div class="btn-group">
                   <button
                     type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    class="btn btn-sm btn-outline-secondary select-button"
                     id="ejecutar-ataque-p1"
                   >
                     Attack
@@ -204,7 +204,7 @@ function startGame() {
                 <div class="btn-group">
                   <button
                     type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    class="btn btn-sm btn-outline-secondary select-button"
                     id="ejecutar-habilidad-p1"
                   >
                     Abillity
@@ -214,7 +214,7 @@ function startGame() {
                 <div class="btn-group">
                   <button
                     type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    class="btn btn-sm btn-outline-secondary select-button"
                     id="ejecutar-habilidad-especial-p1"
                   >
                     Ultimate
@@ -236,7 +236,7 @@ function startGame() {
             </div>
             <div class="card-body">
               <h2 class="card-title">${playerTwo.nombre}</h2>
-              <p class="card-text">algo aca? 🤔</p>
+              <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
               <small class="text-muted" id="card-info-p2"
                   >Damage: ${playerTwo.daño} | Lifepoints: ${playerTwo.vida}</small
                 >
@@ -247,7 +247,7 @@ function startGame() {
                 <div class="btn-group">
                   <button
                     type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    class="btn btn-sm btn-outline-secondary select-button"
                     id="ejecutar-ataque-p2"
                   >
                     Attack
@@ -257,7 +257,7 @@ function startGame() {
                 <div class="btn-group">
                   <button
                     type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    class="btn btn-sm btn-outline-secondary select-button"
                     id="ejecutar-habilidad-p2"
                   >
                     Abillity
@@ -267,7 +267,7 @@ function startGame() {
                 <div class="btn-group">
                   <button
                     type="button"
-                    class="btn btn-sm btn-outline-secondary"
+                    class="btn btn-sm btn-outline-secondary select-button"
                     id="ejecutar-habilidad-especial-p2"
                   >
                     Ultimate

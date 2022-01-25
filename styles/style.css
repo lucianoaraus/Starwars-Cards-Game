@@ -13,6 +13,7 @@ body {
 .card-image {
   width: 200px;
   height: 200px;
+  background: #fff;
 }
 
 .card-body {
@@ -23,6 +24,15 @@ body {
 
 .card-body p {
   color: rgb(197, 197, 197);
+}
+
+.select-button {
+  margin-top: 10px;
+}
+
+.battle-cards-div {
+  display: flex;
+  justify-content: center;
 }
 
 .drop-shadow {
