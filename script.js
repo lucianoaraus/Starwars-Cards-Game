@@ -12,30 +12,21 @@ class Campeon {
     this.id = id;
     this.img = img;
   }
+
+  //Nota: Los metodos llevan return ya que sino rompe al cargar el nuevo HTML con los valores actualizados
   atacar(enemigo) {
     console.log(this.nombre, "ataco a", enemigo.nombre);
     enemigo.vida -= this.daño;
-    console.log(
-      this.nombre,
-      "LP:",
-      this.vida,
-      "|",
-      enemigo.nombre,
-      "LP:",
-      enemigo.vida
-    );
     return enemigo.vida;
   }
   usarHabilidad() {
     if (this.bando == "Oscuridad") {
       this.daño += 150;
       console.log(this.nombre, "Daño +150");
-      console.log("Tu daño ascendio a " + this.daño);
       return this.daño;
     } else {
       this.vida += 300;
       console.log(this.nombre, "Vida +300");
-      console.log("Tu vida ascendio a " + this.vida);
       return this.vida;
     }
   }
@@ -44,16 +35,14 @@ class Campeon {
     //Si es Darth Vader o Luke, tendria una habilidad especial
     if (this.nombre == "Luke Skywalker") {
       this.vida += 750;
-      console.log("Usaste Habilidad Especial!");
-      console.log("Vida +750");
-      console.log("Tu vida ascendio a " + this.vida);
+      console.log(this.nombre, "Nueva vida: " + this.vida);
       return this.vida;
     } else if (this.nombre == "Darth Vader") {
       this.daño += 1000;
-      console.log("Usaste Habilidad Especial!");
-      console.log("LORD ETERNO");
-      console.log("Daño aumentado +1000");
-      console.log("Tu daño ascendio a " + this.daño);
+
+      //console.log("LORD ETERNO");
+      //console.log("Daño aumentado +1000");
+      console.log(this.nombre, "Nuevo daño: " + this.daño);
       return this.daño;
     } else {
       console.log("No tiene habilidad especial");
@@ -62,6 +51,7 @@ class Campeon {
 }
 
 //Instanciacion campeones
+//TODO: Usar AJAX -> JSON
 let yoda = new Campeon(
   "Maestro Yoda",
   110,
@@ -156,8 +146,12 @@ function startGame() {
 
   console.log(jugadores);
 
+  /* while(playerOne.vida != 0 || playerTwo.vida != 0){
+    PLAY THE GAME
+  } */
+
   //WIP:
-  const gameOver = (p1, p2) => {
+  /* const gameOver = (p1, p2) => {
     if (p1.vida <= 0) {
       console.log(playerTwo.nombre + " Gana");
     } else if (p2.vida <= 0) {
@@ -165,7 +159,7 @@ function startGame() {
     }
   };
 
-  gameOver(playerOne, playerTwo);
+  gameOver(playerOne, playerTwo); */
 
   newContent.innerHTML = `
   <div id="battle-cards-content" class="album py-5 bg-light" style="display: none">
