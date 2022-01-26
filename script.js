@@ -1,6 +1,9 @@
 //PROYECTO FINAL - Simulador de batalla Star Wars
 //TODO:
-//- Dark mode (jquery)
+//AJAX con JQuery-> Consultar SWAPI (Nombres y si se puede algun atributo mas del personaje)
+//LOCALSTORAGE -> Guardar los jugadores elegidos
+//Funcion: GameOver
+//Boton para volver al menu principal
 
 //Constructor y funciones
 class Campeon {
@@ -146,8 +149,8 @@ function startGame() {
 
   console.log(jugadores);
 
-  /* while(playerOne.vida != 0 || playerTwo.vida != 0){
-    PLAY THE GAME
+  /* while (playerOne.vida == 0 || playerTwo.vida == 0) {
+    console.log("game over");
   } */
 
   //WIP:
@@ -157,9 +160,7 @@ function startGame() {
     } else if (p2.vida <= 0) {
       console.log(playerOne.nombre + " Gana");
     }
-  };
-
-  gameOver(playerOne, playerTwo); */
+  }; */
 
   newContent.innerHTML = `
   <div id="battle-cards-content" class="album py-5 bg-light" style="display: none">
