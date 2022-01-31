@@ -7,19 +7,24 @@
 
 //Constructor y funciones
 class Campeon {
-  constructor(nombre, daño, vida, bando, id, img) {
+  constructor(nombre, daño, vida, bando, id, img, URLGET) {
     this.nombre = nombre;
     this.daño = daño;
     this.vida = vida;
     this.bando = bando;
     this.id = id;
     this.img = img;
+    this.URLGET = URLGET;
   }
 
   //Nota: Los metodos llevan return ya que sino rompe al cargar el nuevo HTML con los valores actualizados
   atacar(enemigo) {
     console.log(this.nombre, "ataco a", enemigo.nombre);
-    enemigo.vida -= this.daño;
+    if (enemigo.vida <= this.daño) {
+      enemigo.vida = 0;
+    } else {
+      enemigo.vida -= this.daño;
+    }
     return enemigo.vida;
   }
   usarHabilidad() {
@@ -61,7 +66,8 @@ let yoda = new Campeon(
   1500,
   "Luz",
   "yoda-button",
-  "../assets/yoda.png"
+  "../assets/yoda.png",
+  "https://swapi.dev/api/people/20"
 );
 let luke = new Campeon(
   "Luke Skywalker",
@@ -69,7 +75,8 @@ let luke = new Campeon(
   1100,
   "Luz",
   "luke-button",
-  "../assets/luke.png"
+  "../assets/luke.png",
+  "https://swapi.dev/api/people/1"
 );
 let leia = new Campeon(
   "Princesa Leia",
@@ -77,7 +84,8 @@ let leia = new Campeon(
   1000,
   "Luz",
   "leia-button",
-  "../assets/leia.png"
+  "../assets/leia.png",
+  "https://swapi.dev/api/people/5"
 );
 let vader = new Campeon(
   "Darth Vader",
@@ -85,7 +93,8 @@ let vader = new Campeon(
   1200,
   "Oscuridad",
   "vader-button",
-  "../assets/vader.png"
+  "../assets/vader.png",
+  "https://swapi.dev/api/people/4"
 );
 let obiWan = new Campeon(
   "Obi Wan",
@@ -93,7 +102,8 @@ let obiWan = new Campeon(
   1100,
   "Luz",
   "obi-button",
-  "../assets/obi-wan.png"
+  "../assets/obi-wan.png",
+  "https://swapi.dev/api/people/10"
 );
 let boba = new Campeon(
   "Boba Fett",
@@ -101,7 +111,8 @@ let boba = new Campeon(
   1100,
   "Oscuridad",
   "boba-button",
-  "../assets/boba.png"
+  "../assets/boba.png",
+  "https://swapi.dev/api/people/22"
 );
 
 const campeones = [yoda, luke, leia, vader, obiWan, boba];
@@ -149,26 +160,13 @@ function startGame() {
 
   console.log(jugadores);
 
-  /* while (playerOne.vida == 0 || playerTwo.vida == 0) {
-    console.log("game over");
-  } */
-
-  //WIP:
-  /* const gameOver = (p1, p2) => {
-    if (p1.vida <= 0) {
-      console.log(playerTwo.nombre + " Gana");
-    } else if (p2.vida <= 0) {
-      console.log(playerOne.nombre + " Gana");
-    }
-  }; */
-
   newContent.innerHTML = `
   <div id="battle-cards-content" class="album py-5 bg-light" style="display: none">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 battle-cards-div">
         
         <!-- Player One  -->
-        <div class="col drop-shadow">
+        <div class="col drop-shadow" id="battle-p1">
           <div class="card shadow-sm">
             <div class="box-image">
               <img
@@ -221,7 +219,7 @@ function startGame() {
         </div>
 
         <!-- Player Two  -->
-        <div class="col drop-shadow">
+        <div class="col drop-shadow" id="battle-p2">
           <div class="card shadow-sm">
             <div class="box-image">
               <img
@@ -283,10 +281,95 @@ function startGame() {
   // Efecto/Animacion con JQuery
   $("#battle-cards-content").fadeIn(1000);
 
+  const gameOver = (p1, p2) => {
+    let winner = null;
+
+    //conditions for winner settings
+    if (p1.vida == 0) {
+      console.log("p2 gana");
+      winner = p2;
+    } else if (p2.vida == 0) {
+      console.log("p1 gana");
+      winner = p1;
+    }
+
+    //Winner interface creation
+    const oldContent = document.getElementById("battle-cards-content");
+    const winnerContent = document.createElement("div");
+
+    winnerContent.innerHTML = `
+      <div id="battle-cards-content" class="album py-5 bg-light" >
+        <div class="container">
+        <h2 class="d-flex justify-content-center">Winner</h2>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 battle-cards-div">
+            
+            <!-- Player One  -->
+            <div class="col drop-shadow" id="battle-p1">
+              <div class="card shadow-sm">
+                <div class="box-image">
+                  <img
+                    class="card-image"
+                    src="${winner.img}"
+                  />
+                </div>
+                <div class="card-body">
+                  <h2 class="card-title">${winner.nombre}</h2>
+                  <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
+                  <small class="text-muted" id="card-info-p1"
+                      >Damage: ${winner.daño} | Lifepoints: ${winner.vida}</small
+                    >
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <!-- Attack Button -->
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary select-button"
+                        id="ejecutar-ataque-p1"
+                      >
+                        Attack
+                      </button>
+                    </div>
+                    <!-- Abillity Button -->
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary select-button"
+                        id="ejecutar-habilidad-p1"
+                      >
+                        Abillity
+                      </button>
+                    </div>
+                    <!-- Ultimate Button -->
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary select-button"
+                        id="ejecutar-habilidad-especial-p1"
+                      >
+                        Ultimate
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    oldContent.replaceChildren(winnerContent);
+  };
+
   // Funciones para el p1
   const player1Attack = (p1, p2) => {
     const cardInfoP2 = document.getElementById("card-info-p2");
     cardInfoP2.innerText = `Damage: ${p2.daño} | Lifepoints: ${p1.atacar(p2)}`;
+    if (p2.vida <= 0) {
+      gameOver(p1, p2);
+    }
   };
 
   const player1Ability = (p1) => {
@@ -317,9 +400,12 @@ function startGame() {
   };
 
   // Funciones para el p2
-  const player2Attack = (p2, p1) => {
+  const player2Attack = (p1, p2) => {
     const cardInfoP1 = document.getElementById("card-info-p1");
     cardInfoP1.innerText = `Damage: ${p1.daño} | Lifepoints: ${p2.atacar(p1)}`;
+    if (p1.vida <= 0) {
+      gameOver(p1, p2);
+    }
   };
 
   const player2Ability = (p2) => {
@@ -375,3 +461,38 @@ function startGame() {
     player2SpecialAbility(playerTwo);
   });
 }
+
+//AJAX JQUERY SWAPI
+//Evaluar posibilidad de implementarlo como metodo dentro de la clase
+/* $.get(yoda.URLGET, function (data) {
+  $("body").append(data.name);
+}); */
+
+/* const newContent = document.createElement("div");
+newContent.innerHTML = `
+<div class="col drop-shadow">
+    <div class="card shadow-sm">
+      <div class="box-image">
+        <img class="card-image" src="./assets/yoda.png" id="yoda-image">
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">Master Yoda</h2>
+        <p class="card-text">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          Commodi eum, voluptas reiciendis consequatur natus cum!
+        </p>
+        <small class="text-muted">Damage: 110 | Lifepoints: 1500 | Side: Light</small>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary select-button" id="yoda-button">
+              Select
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+$(".main-container").append(newContent);
+ */
