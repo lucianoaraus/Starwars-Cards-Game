@@ -1,5 +1,4 @@
 //PROYECTO FINAL - Simulador de batalla Star Wars
-//WIP: AJAX - Seguir mirando: https://drive.google.com/file/d/1_ZmK8aT30Mw2Q59b58P8ygEB5AS8af-g/view
 
 //TODO:
 //LOCALSTORAGE -> Guardar los jugadores elegidos
@@ -459,41 +458,313 @@ function startGame() {
 }
 
 //AJAX SWAPI
-let lukeName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+/*let lukeName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
   .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
   .then((data) => {
     console.log(Object.entries(data)[3][1].map((champion) => champion.name)[0]);
-  });
+  });*/
 
-let leiaName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+/* let leiaName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
   .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
   .then((data) => {
     console.log(Object.entries(data)[3][1].map((champion) => champion.name)[4]);
-  });
+  }); */
 
-let bobaName = fetch("https://swapi.dev/api/people/?page=3")
+/* let bobaName = fetch("https://swapi.dev/api/people/?page=3")
   .then((response) => response.json())
   .then((data) => {
     console.log(Object.entries(data)[3][1].map((champion) => champion.name)[0]);
-  });
+  }); */
 
-let obiName = fetch("https://swapi.dev/api/people/?page=1")
+/* let obiName = fetch("https://swapi.dev/api/people/?page=1")
   .then((response) => response.json())
   .then((data) => {
     console.log(Object.entries(data)[3][1].map((champion) => champion.name)[9]);
-  });
+  }); */
 
-let yodaName = fetch("https://swapi.dev/api/people/?page=2")
+/* let yodaName = fetch("https://swapi.dev/api/people/?page=2")
   .then((response) => response.json())
   .then((data) => {
-    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[8]);
-  });
+    Object.entries(data)[3][1].map((champion) => champion.name)[8];
+  }); */
 
-let vaderName = fetch("https://swapi.dev/api/people/?page=1")
+/* let vaderName = fetch("https://swapi.dev/api/people/?page=1")
   .then((response) => response.json())
   .then((data) => {
     console.log(Object.entries(data)[3][1].map((champion) => champion.name)[3]);
-  });
+  }); */
 
-let yodaTitle = document.getElementById("yoda-title");
-//yodaTitle.innerHTML = `${yodaName}
+let cardsContentDiv = document.getElementById("cards-content-div");
+let selectChampionsButton = document
+  .getElementById("select-champions")
+  .addEventListener("click", () => {
+    //Yoda
+    fetch("https://swapi.dev/api/people/?page=2") //Devuelve un 'OBJETO PROMESA'
+      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+      .then((data) => {
+        let yodaName = Object.entries(data)[3][1].map(
+          (champion) => champion.name
+        )[8];
+        cardsContentDiv.innerHTML += `
+          <div class="col drop-shadow">
+            <div class="card shadow-sm">
+              <div class="box-image">
+                <img
+                  class="card-image"
+                  src="./assets/yoda.png"
+                  id="yoda-image"
+                />
+              </div>
+              <div class="card-body">
+                <h2 class="card-title" id="yoda-title">${yodaName}</h2>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Commodi eum, voluptas reiciendis consequatur natus cum!
+                </p>
+                <small class="text-muted"
+                  >Damage: 110 | Lifepoints: 1500 | Side: Light</small
+                >
+                <div
+                  class="d-flex justify-content-between align-items-center"
+                >
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary select-button"
+                      id="yoda-button"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+    //Luke
+    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+      .then((data) => {
+        let lukeName = Object.entries(data)[3][1].map(
+          (champion) => champion.name
+        )[0];
+        cardsContentDiv.innerHTML += `
+          <div class="col drop-shadow">
+            <div class="card shadow-sm">
+              <div class="box-image">
+                <img
+                  class="card-image"
+                  src="./assets/luke.png"
+                  id="luke-image"
+                />
+              </div>
+              <div class="card-body">
+                <h2 class="card-title" id="luke-title">${lukeName}</h2>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Commodi eum, voluptas reiciendis consequatur natus cum!
+                </p>
+                <small class="text-muted"
+                  >Damage: 120 | Lifepoints: 1100 | Side: Light</small
+                >
+                <div
+                  class="d-flex justify-content-between align-items-center"
+                >
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary select-button"
+                      id="luke-button"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+    //Leia
+    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+      .then((data) => {
+        let leiaName = Object.entries(data)[3][1].map(
+          (champion) => champion.name
+        )[4];
+        cardsContentDiv.innerHTML += `
+          <div class="col drop-shadow">
+            <div class="card shadow-sm">
+              <div class="box-image">
+                <img
+                  class="card-image"
+                  src="./assets/leia.png"
+                  id="leia-image"
+                />
+              </div>
+              <div class="card-body">
+                <h2 class="card-title" id="leia-title">${leiaName}</h2>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Commodi eum, voluptas reiciendis consequatur natus cum!
+                </p>
+                <small class="text-muted"
+                  >Damage: 90 | Lifepoints: 1000 | Side: Light</small
+                >
+                <div
+                  class="d-flex justify-content-between align-items-center"
+                >
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary select-button"
+                      id="leia-button"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+    //Vader
+    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+      .then((data) => {
+        let vaderName = Object.entries(data)[3][1].map(
+          (champion) => champion.name
+        )[3];
+        cardsContentDiv.innerHTML += `
+          <div class="col drop-shadow">
+            <div class="card shadow-sm">
+              <div class="box-image">
+                <img
+                  class="card-image"
+                  src="./assets/vader.png"
+                  id="vader-image"
+                />
+              </div>
+              <div class="card-body">
+                <h2 class="card-title" id="vader-title">${vaderName}</h2>
+                <p class="card-text">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Commodi eum, voluptas reiciendis consequatur natus cum!
+                </p>
+                <small class="text-muted"
+                  >Damage: 150 | Lifepoints: 1200 | Side: Dark</small
+                >
+                <div
+                  class="d-flex justify-content-between align-items-center"
+                >
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary select-button"
+                      id="vader-button"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+    //Obi
+    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+      .then((data) => {
+        let obiName = Object.entries(data)[3][1].map(
+          (champion) => champion.name
+        )[9];
+        cardsContentDiv.innerHTML += `
+          <div class="col drop-shadow">
+              <div class="card shadow-sm">
+                <div class="box-image">
+                  <img
+                    class="card-image"
+                    src="./assets/obi-wan.png"
+                    id="obi-wan-image"
+                  />
+                </div>
+                <div class="card-body">
+                  <h2 class="card-title" id="obi-title">${obiName}</h2>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Commodi eum, voluptas reiciendis consequatur natus cum!
+                  </p>
+                  <small class="text-muted"
+                    >Damage: 105 | Lifepoints: 1100 | Side: Light</small
+                  >
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary select-button"
+                        id="obi-button"
+                      >
+                        Select
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        `;
+      });
+
+    //Boba
+    fetch("https://swapi.dev/api/people/?page=3") //Devuelve un 'OBJETO PROMESA'
+      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+      .then((data) => {
+        let obiName = Object.entries(data)[3][1].map(
+          (champion) => champion.name
+        )[0];
+        cardsContentDiv.innerHTML += `
+          <div class="col drop-shadow">
+              <div class="card shadow-sm">
+                <div class="box-image">
+                  <img
+                    class="card-image"
+                    src="./assets/boba.png"
+                    id="boba-image"
+                  />
+                </div>
+                <div class="card-body">
+                  <h2 class="card-title" id="boba-title">${obiName}</h2>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Commodi eum, voluptas reiciendis consequatur natus cum!
+                  </p>
+                  <small class="text-muted"
+                    >Damage: 100 | Lifepoints: 1100 | Side: Dark</small
+                  >
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary select-button"
+                        id="boba-button"
+                      >
+                        Select
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        `;
+      });
+  });
