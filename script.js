@@ -1,9 +1,10 @@
 //PROYECTO FINAL - Simulador de batalla Star Wars
+//WIP: AJAX - Seguir mirando: https://drive.google.com/file/d/1_ZmK8aT30Mw2Q59b58P8ygEB5AS8af-g/view
+
 //TODO:
-//AJAX con JQuery-> Consultar SWAPI (Nombres y si se puede algun atributo mas del personaje)
 //LOCALSTORAGE -> Guardar los jugadores elegidos
-//Funcion: GameOver
 //Boton para volver al menu principal
+//Ultimate para los demas jugadores? Cubrir undefined
 
 //Constructor y funciones
 class Campeon {
@@ -14,7 +15,6 @@ class Campeon {
     this.bando = bando;
     this.id = id;
     this.img = img;
-    this.URLGET = URLGET;
   }
 
   //Nota: Los metodos llevan return ya que sino rompe al cargar el nuevo HTML con los valores actualizados
@@ -61,58 +61,52 @@ class Campeon {
 //Instanciacion campeones
 //TODO: Usar AJAX -> JSON
 let yoda = new Campeon(
-  "Maestro Yoda",
+  "yoda",
   110,
   1500,
   "Luz",
   "yoda-button",
-  "../assets/yoda.png",
-  "https://swapi.dev/api/people/20"
+  "../assets/yoda.png"
 );
 let luke = new Campeon(
-  "Luke Skywalker",
+  "luke",
   120,
   1100,
   "Luz",
   "luke-button",
-  "../assets/luke.png",
-  "https://swapi.dev/api/people/1"
+  "../assets/luke.png"
 );
 let leia = new Campeon(
-  "Princesa Leia",
+  "leia",
   90,
   1000,
   "Luz",
   "leia-button",
-  "../assets/leia.png",
-  "https://swapi.dev/api/people/5"
+  "../assets/leia.png"
 );
 let vader = new Campeon(
-  "Darth Vader",
+  "vader",
   150,
   1200,
   "Oscuridad",
   "vader-button",
-  "../assets/vader.png",
-  "https://swapi.dev/api/people/4"
+  "../assets/vader.png"
 );
 let obiWan = new Campeon(
-  "Obi Wan",
+  "obi",
   105,
   1100,
   "Luz",
   "obi-button",
-  "../assets/obi-wan.png",
-  "https://swapi.dev/api/people/10"
+  "../assets/obi-wan.png"
 );
 let boba = new Campeon(
-  "Boba Fett",
+  "boba",
   100,
   1100,
   "Oscuridad",
   "boba-button",
-  "../assets/boba.png",
-  "https://swapi.dev/api/people/22"
+  "../assets/boba.png"
 );
 
 const campeones = [yoda, luke, leia, vader, obiWan, boba];
@@ -175,7 +169,7 @@ function startGame() {
               />
             </div>
             <div class="card-body">
-              <h2 class="card-title">${playerOne.nombre}</h2>
+              <h2 class="card-title"id="${playerOne.nombre}-title"></h2>
               <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
               <small class="text-muted" id="card-info-p1"
                   >Damage: ${playerOne.daño} | Lifepoints: ${playerOne.vida}</small
@@ -228,7 +222,8 @@ function startGame() {
               />
             </div>
             <div class="card-body">
-              <h2 class="card-title">${playerTwo.nombre}</h2>
+              <h2 class="card-title"id="${playerTwo.nombre}-title"></h2>
+              
               <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
               <small class="text-muted" id="card-info-p2"
                   >Damage: ${playerTwo.daño} | Lifepoints: ${playerTwo.vida}</small
@@ -400,7 +395,8 @@ function startGame() {
   };
 
   // Funciones para el p2
-  const player2Attack = (p1, p2) => {
+  const player2Attack = (p2, p1) => {
+    console.log("entra ataque de p2");
     const cardInfoP1 = document.getElementById("card-info-p1");
     cardInfoP1.innerText = `Damage: ${p1.daño} | Lifepoints: ${p2.atacar(p1)}`;
     if (p1.vida <= 0) {
@@ -462,37 +458,42 @@ function startGame() {
   });
 }
 
-//AJAX JQUERY SWAPI
-//Evaluar posibilidad de implementarlo como metodo dentro de la clase
-/* $.get(yoda.URLGET, function (data) {
-  $("body").append(data.name);
-}); */
+//AJAX SWAPI
+let lukeName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+  .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+  .then((data) => {
+    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[0]);
+  });
 
-/* const newContent = document.createElement("div");
-newContent.innerHTML = `
-<div class="col drop-shadow">
-    <div class="card shadow-sm">
-      <div class="box-image">
-        <img class="card-image" src="./assets/yoda.png" id="yoda-image">
-      </div>
-      <div class="card-body">
-        <h2 class="card-title">Master Yoda</h2>
-        <p class="card-text">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Commodi eum, voluptas reiciendis consequatur natus cum!
-        </p>
-        <small class="text-muted">Damage: 110 | Lifepoints: 1500 | Side: Light</small>
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary select-button" id="yoda-button">
-              Select
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-`;
+let leiaName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+  .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+  .then((data) => {
+    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[4]);
+  });
 
-$(".main-container").append(newContent);
- */
+let bobaName = fetch("https://swapi.dev/api/people/?page=3")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[0]);
+  });
+
+let obiName = fetch("https://swapi.dev/api/people/?page=1")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[9]);
+  });
+
+let yodaName = fetch("https://swapi.dev/api/people/?page=2")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[8]);
+  });
+
+let vaderName = fetch("https://swapi.dev/api/people/?page=1")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[3]);
+  });
+
+let yodaTitle = document.getElementById("yoda-title");
+//yodaTitle.innerHTML = `${yodaName}
