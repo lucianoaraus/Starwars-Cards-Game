@@ -1,13 +1,11 @@
 //PROYECTO FINAL - Simulador de batalla Star Wars
 
 //TODO:
-//LOCALSTORAGE -> Guardar los jugadores elegidos
 //Boton para volver al menu principal
 //Ultimate para los demas jugadores? Cubrir undefined
 
-//Constructor y funciones
 class Campeon {
-  constructor(nombre, daño, vida, bando, id, img, URLGET) {
+  constructor(nombre, daño, vida, bando, id, img) {
     this.nombre = nombre;
     this.daño = daño;
     this.vida = vida;
@@ -16,9 +14,7 @@ class Campeon {
     this.img = img;
   }
 
-  //Nota: Los metodos llevan return ya que sino rompe al cargar el nuevo HTML con los valores actualizados
   atacar(enemigo) {
-    console.log(this.nombre, "ataco a", enemigo.nombre);
     if (enemigo.vida <= this.daño) {
       enemigo.vida = 0;
     } else {
@@ -29,30 +25,26 @@ class Campeon {
   usarHabilidad() {
     if (this.bando == "Oscuridad") {
       this.daño += 150;
-      console.log(this.nombre, "Daño +150");
       return this.daño;
     } else {
       this.vida += 300;
-      console.log(this.nombre, "Vida +300");
       return this.vida;
     }
   }
 
   habilidadEspecial() {
-    //Si es Darth Vader o Luke, tendria una habilidad especial
     if (this.nombre == "Luke Skywalker") {
       this.vida += 750;
-      console.log(this.nombre, "Nueva vida: " + this.vida);
       return this.vida;
     } else if (this.nombre == "Darth Vader") {
       this.daño += 1000;
-
-      //console.log("LORD ETERNO");
-      //console.log("Daño aumentado +1000");
-      console.log(this.nombre, "Nuevo daño: " + this.daño);
       return this.daño;
-    } else {
-      console.log("No tiene habilidad especial");
+    } else if (this.bando == "Oscuridad") {
+      console.log("no tiene ulti");
+      return this.daño;
+    } else if (this.bando == "Luz") {
+      console.log("no tiene ulti");
+      return this.vida;
     }
   }
 }
@@ -60,7 +52,7 @@ class Campeon {
 //Instanciacion campeones
 //TODO: Usar AJAX -> JSON
 let yoda = new Campeon(
-  "yoda",
+  "Yoda",
   110,
   1500,
   "Luz",
@@ -68,7 +60,7 @@ let yoda = new Campeon(
   "../assets/yoda.png"
 );
 let luke = new Campeon(
-  "luke",
+  "Luke Skywalker",
   120,
   1100,
   "Luz",
@@ -76,7 +68,7 @@ let luke = new Campeon(
   "../assets/luke.png"
 );
 let leia = new Campeon(
-  "leia",
+  "Leia Organa",
   90,
   1000,
   "Luz",
@@ -84,7 +76,7 @@ let leia = new Campeon(
   "../assets/leia.png"
 );
 let vader = new Campeon(
-  "vader",
+  "Darth Vader",
   150,
   1200,
   "Oscuridad",
@@ -92,7 +84,7 @@ let vader = new Campeon(
   "../assets/vader.png"
 );
 let obiWan = new Campeon(
-  "obi",
+  "Obi-Wan Kenobi",
   105,
   1100,
   "Luz",
@@ -100,7 +92,7 @@ let obiWan = new Campeon(
   "../assets/obi-wan.png"
 );
 let boba = new Campeon(
-  "boba",
+  "Boba Fett",
   100,
   1100,
   "Oscuridad",
@@ -112,38 +104,45 @@ const campeones = [yoda, luke, leia, vader, obiWan, boba];
 
 let jugadores = [];
 
+//WIP: LocalStorage
+// localStorage.setItem("players", JSON.stringify(jugadores));
+//let playersQuery = JSON.parse(localStorage.getItem("players"));
+//console.log(playersQuery);
+
 function buscarJugadores(clicked_id) {
   console.log("Player", jugadores.length, clicked_id);
   jugadores.push(campeones.find((c) => c.id == clicked_id));
+  //LocalStorage
+  //let p1 = jugadores.push(campeones.find((c) => c.id == clicked_id));
+  //localStorage.setItem("playerOne", p1);
   if (jugadores.length == 2) {
     startGame();
   }
 }
 
-//Ejecucion de scripts JQuery
-$("#yoda-button").click(function () {
-  buscarJugadores(this.id);
-});
+const bobaSelect = () => {
+  buscarJugadores("boba-button");
+};
 
-$("#luke-button").click(function () {
-  buscarJugadores(this.id);
-});
+const lukeSelect = () => {
+  buscarJugadores("luke-button");
+};
 
-$("#leia-button").click(function () {
-  buscarJugadores(this.id);
-});
+const vaderSelect = () => {
+  buscarJugadores("vader-button");
+};
 
-$("#vader-button").click(function () {
-  buscarJugadores(this.id);
-});
+const leiaSelect = () => {
+  buscarJugadores("leia-button");
+};
 
-$("#boba-button").click(function () {
-  buscarJugadores(this.id);
-});
+const obiSelect = () => {
+  buscarJugadores("obi-button");
+};
 
-$("#obi-button").click(function () {
-  buscarJugadores(this.id);
-});
+const yodaSelect = () => {
+  buscarJugadores("yoda-button");
+};
 
 function startGame() {
   const content = document.getElementById("cards-content");
@@ -168,8 +167,8 @@ function startGame() {
               />
             </div>
             <div class="card-body">
-              <h2 class="card-title"id="${playerOne.nombre}-title"></h2>
-              <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
+              <h2 class="card-title"id="${playerOne.nombre}-title">${playerOne.nombre}</h2>
+              <p class="card-text">Only some masters who have trained hard possess the power of the special ability...</p>
               <small class="text-muted" id="card-info-p1"
                   >Damage: ${playerOne.daño} | Lifepoints: ${playerOne.vida}</small
                 >
@@ -221,9 +220,9 @@ function startGame() {
               />
             </div>
             <div class="card-body">
-              <h2 class="card-title"id="${playerTwo.nombre}-title"></h2>
+              <h2 class="card-title"id="${playerTwo.nombre}-title">${playerTwo.nombre}</h2>
               
-              <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
+              <p class="card-text">Only some masters who have trained hard possess the power of the special ability...</p>
               <small class="text-muted" id="card-info-p2"
                   >Damage: ${playerTwo.daño} | Lifepoints: ${playerTwo.vida}</small
                 >
@@ -278,16 +277,14 @@ function startGame() {
   const gameOver = (p1, p2) => {
     let winner = null;
 
-    //conditions for winner settings
+    // conditions for winner settings
     if (p1.vida == 0) {
-      console.log("p2 gana");
       winner = p2;
     } else if (p2.vida == 0) {
-      console.log("p1 gana");
       winner = p1;
     }
 
-    //Winner interface creation
+    // winner interface creation
     const oldContent = document.getElementById("battle-cards-content");
     const winnerContent = document.createElement("div");
 
@@ -304,11 +301,12 @@ function startGame() {
                   <img
                     class="card-image"
                     src="${winner.img}"
+                    
                   />
                 </div>
                 <div class="card-body">
                   <h2 class="card-title">${winner.nombre}</h2>
-                  <p class="card-text">*DESCRIPCION DE LA ULTIMATE*</p>
+                  <p class="card-text">Only some masters who have trained hard possess the power of the special ability...</p>
                   <small class="text-muted" id="card-info-p1"
                       >Damage: ${winner.daño} | Lifepoints: ${winner.vida}</small
                     >
@@ -457,72 +455,216 @@ function startGame() {
   });
 }
 
-//AJAX SWAPI
-/*let lukeName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
-  .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-  .then((data) => {
-    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[0]);
-  });*/
-
-/* let leiaName = fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
-  .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-  .then((data) => {
-    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[4]);
-  }); */
-
-/* let bobaName = fetch("https://swapi.dev/api/people/?page=3")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[0]);
-  }); */
-
-/* let obiName = fetch("https://swapi.dev/api/people/?page=1")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[9]);
-  }); */
-
-/* let yodaName = fetch("https://swapi.dev/api/people/?page=2")
-  .then((response) => response.json())
-  .then((data) => {
-    Object.entries(data)[3][1].map((champion) => champion.name)[8];
-  }); */
-
-/* let vaderName = fetch("https://swapi.dev/api/people/?page=1")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(Object.entries(data)[3][1].map((champion) => champion.name)[3]);
-  }); */
-
+let championsSelectUI = false;
 let cardsContentDiv = document.getElementById("cards-content-div");
 let selectChampionsButton = document
   .getElementById("select-champions")
   .addEventListener("click", () => {
-    //Yoda
-    fetch("https://swapi.dev/api/people/?page=2") //Devuelve un 'OBJETO PROMESA'
-      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-      .then((data) => {
-        let yodaName = Object.entries(data)[3][1].map(
-          (champion) => champion.name
-        )[8];
-        cardsContentDiv.innerHTML += `
-          <div class="col drop-shadow">
+    if (!championsSelectUI) {
+      //Yoda
+      fetch("https://swapi.dev/api/people/?page=2") //Devuelve un 'OBJETO PROMESA'
+        .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+        .then((data) => {
+          let yodaName = Object.entries(data)[3][1].map(
+            (champion) => champion.name
+          )[8];
+          cardsContentDiv.innerHTML += `
+        <div class="col drop-shadow">
+          <div class="card shadow-sm">
+            <div class="box-image">
+              <img
+                class="card-image"
+                src="./assets/yoda.png"
+                id="yoda-image"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="card-title" id="yoda-title">${yodaName}</h2>
+              <p class="card-text">
+              Member of a mysterious species. A revered Jedi Master who served as Grand Master of the Jedi Order in the last days of the Galactic Republic. He is famous within the Order for his wisdom, Force powers and lightsaber combat, and he lived for almost 900 years.
+              </p>
+              <small class="text-muted"
+                >Damage: 110 | Lifepoints: 1500 | Side: Light</small
+              >
+              <div
+                class="d-flex justify-content-between align-items-center"
+              >
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary select-button"
+                    id="yoda-button"
+                    onclick="yodaSelect()"
+                  >
+                    Select
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+        });
+
+      //Luke
+      fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+        .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+        .then((data) => {
+          let lukeName = Object.entries(data)[3][1].map(
+            (champion) => champion.name
+          )[0];
+          cardsContentDiv.innerHTML += `
+        <div class="col drop-shadow">
+          <div class="card shadow-sm">
+            <div class="box-image">
+              <img
+                class="card-image"
+                src="./assets/luke.png"
+                id="luke-image"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="card-title" id="luke-title">${lukeName}</h2>
+              <p class="card-text">
+              A Force-sensitive human and Jedi Master who, along with his twin sister, Princess Leia Organa, fought against the government of the Galactic Empire during the Galactic Civil War. He is the son of Jedi Knight Anakin Skywalker and Senator Padmé Amidala of Naboo.
+              </p>
+              <small class="text-muted"
+                >Damage: 120 | Lifepoints: 1100 | Side: Light</small
+              >
+              <div
+                class="d-flex justify-content-between align-items-center"
+              >
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary select-button"
+                    id="luke-button"
+                    onclick="lukeSelect()"
+                  >
+                    Select
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+        });
+
+      //Leia
+      fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+        .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+        .then((data) => {
+          let leiaName = Object.entries(data)[3][1].map(
+            (champion) => champion.name
+          )[4];
+          cardsContentDiv.innerHTML += `
+        <div class="col drop-shadow">
+          <div class="card shadow-sm">
+            <div class="box-image">
+              <img
+                class="card-image"
+                src="./assets/leia.png"
+                id="leia-image"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="card-title" id="leia-title">${leiaName}</h2>
+              <p class="card-text">
+                A Force-sensitive human female, she was a princess of Alderaan, a member of the Imperial Senate, leader of the Alliance to Restore the Republic, a member of the Galactic Senate, and a general in the Resistance.
+              </p>
+              <small class="text-muted"
+                >Damage: 90 | Lifepoints: 1000 | Side: Light</small
+              >
+              <div
+                class="d-flex justify-content-between align-items-center"
+              >
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary select-button"
+                    id="leia-button"
+                    onclick="leiaSelect()"
+                  >
+                    Select
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+        });
+
+      //Vader
+      fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+        .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+        .then((data) => {
+          let vaderName = Object.entries(data)[3][1].map(
+            (champion) => champion.name
+          )[3];
+          cardsContentDiv.innerHTML += `
+        <div class="col drop-shadow">
+          <div class="card shadow-sm">
+            <div class="box-image">
+              <img
+                class="card-image"
+                src="./assets/vader.png"
+                id="vader-image"
+              />
+            </div>
+            <div class="card-body">
+              <h2 class="card-title" id="vader-title">${vaderName}</h2>
+              <p class="card-text">
+              Anger fuels the Dark Side and Vader's hate hasn't limits. After turning to the dark side of the Force, he became known as the Dark Lord of the Sith and an apprentice to Emperor Darth Sidious. As the Sith Lord, Vader turned on his former comrades and hunted the surviving Jedi to near extinction.
+              </p>
+              <small class="text-muted"
+                >Damage: 150 | Lifepoints: 1200 | Side: Dark</small
+              >
+              <div
+                class="d-flex justify-content-between align-items-center"
+              >
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary select-button"
+                    id="vader-button"
+                    onclick="vaderSelect()"
+                  >
+                    Select
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+        });
+
+      //Obi
+      fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
+        .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+        .then((data) => {
+          let obiName = Object.entries(data)[3][1].map(
+            (champion) => champion.name
+          )[9];
+          cardsContentDiv.innerHTML += `
+        <div class="col drop-shadow">
             <div class="card shadow-sm">
               <div class="box-image">
                 <img
                   class="card-image"
-                  src="./assets/yoda.png"
-                  id="yoda-image"
+                  src="./assets/obi-wan.png"
+                  id="obi-wan-image"
                 />
               </div>
               <div class="card-body">
-                <h2 class="card-title" id="yoda-title">${yodaName}</h2>
+                <h2 class="card-title" id="obi-title">${obiName}</h2>
                 <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Commodi eum, voluptas reiciendis consequatur natus cum!
+                  A Force-sensitive human male and a legendary Jedi Master and member of the Jedi High Council during the Fall of the Republic.
                 </p>
                 <small class="text-muted"
-                  >Damage: 110 | Lifepoints: 1500 | Side: Light</small
+                  >Damage: 105 | Lifepoints: 1100 | Side: Light</small
                 >
                 <div
                   class="d-flex justify-content-between align-items-center"
@@ -531,7 +673,8 @@ let selectChampionsButton = document
                     <button
                       type="button"
                       class="btn btn-sm btn-outline-secondary select-button"
-                      id="yoda-button"
+                      id="obi-button"
+                      onclick="obiSelect()"
                     >
                       Select
                     </button>
@@ -540,34 +683,33 @@ let selectChampionsButton = document
               </div>
             </div>
           </div>
-        `;
-      });
+      `;
+        });
 
-    //Luke
-    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
-      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-      .then((data) => {
-        let lukeName = Object.entries(data)[3][1].map(
-          (champion) => champion.name
-        )[0];
-        cardsContentDiv.innerHTML += `
-          <div class="col drop-shadow">
+      //Boba
+      fetch("https://swapi.dev/api/people/?page=3") //Devuelve un 'OBJETO PROMESA'
+        .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
+        .then((data) => {
+          let bobaName = Object.entries(data)[3][1].map(
+            (champion) => champion.name
+          )[0];
+          cardsContentDiv.innerHTML += `
+        <div class="col drop-shadow">
             <div class="card shadow-sm">
               <div class="box-image">
                 <img
                   class="card-image"
-                  src="./assets/luke.png"
-                  id="luke-image"
+                  src="./assets/boba.png"
+                  id="boba-image"
                 />
               </div>
               <div class="card-body">
-                <h2 class="card-title" id="luke-title">${lukeName}</h2>
+                <h2 class="card-title" id="boba-title">${bobaName}</h2>
                 <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Commodi eum, voluptas reiciendis consequatur natus cum!
+                  A Mandalorian warrior and bounty hunter. Clone of the famed Jango Fett, created in 32 BBY as the first of several replicas of Fett designed to become part of the Grand Army of the Republic, and raised by Jango as his son.
                 </p>
                 <small class="text-muted"
-                  >Damage: 120 | Lifepoints: 1100 | Side: Light</small
+                  >Damage: 100 | Lifepoints: 1100 | Side: Dark</small
                 >
                 <div
                   class="d-flex justify-content-between align-items-center"
@@ -575,8 +717,9 @@ let selectChampionsButton = document
                   <div class="btn-group">
                     <button
                       type="button"
-                      class="btn btn-sm btn-outline-secondary select-button"
-                      id="luke-button"
+                      class="btn btn-sm btn-outline-secondary select-button boba-button"
+                      id="boba-button"
+                      onclick="bobaSelect()"
                     >
                       Select
                     </button>
@@ -585,186 +728,14 @@ let selectChampionsButton = document
               </div>
             </div>
           </div>
-        `;
-      });
-
-    //Leia
-    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
-      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-      .then((data) => {
-        let leiaName = Object.entries(data)[3][1].map(
-          (champion) => champion.name
-        )[4];
-        cardsContentDiv.innerHTML += `
-          <div class="col drop-shadow">
-            <div class="card shadow-sm">
-              <div class="box-image">
-                <img
-                  class="card-image"
-                  src="./assets/leia.png"
-                  id="leia-image"
-                />
-              </div>
-              <div class="card-body">
-                <h2 class="card-title" id="leia-title">${leiaName}</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Commodi eum, voluptas reiciendis consequatur natus cum!
-                </p>
-                <small class="text-muted"
-                  >Damage: 90 | Lifepoints: 1000 | Side: Light</small
-                >
-                <div
-                  class="d-flex justify-content-between align-items-center"
-                >
-                  <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary select-button"
-                      id="leia-button"
-                    >
-                      Select
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-    //Vader
-    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
-      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-      .then((data) => {
-        let vaderName = Object.entries(data)[3][1].map(
-          (champion) => champion.name
-        )[3];
-        cardsContentDiv.innerHTML += `
-          <div class="col drop-shadow">
-            <div class="card shadow-sm">
-              <div class="box-image">
-                <img
-                  class="card-image"
-                  src="./assets/vader.png"
-                  id="vader-image"
-                />
-              </div>
-              <div class="card-body">
-                <h2 class="card-title" id="vader-title">${vaderName}</h2>
-                <p class="card-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Commodi eum, voluptas reiciendis consequatur natus cum!
-                </p>
-                <small class="text-muted"
-                  >Damage: 150 | Lifepoints: 1200 | Side: Dark</small
-                >
-                <div
-                  class="d-flex justify-content-between align-items-center"
-                >
-                  <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary select-button"
-                      id="vader-button"
-                    >
-                      Select
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-    //Obi
-    fetch("https://swapi.dev/api/people/?page=1") //Devuelve un 'OBJETO PROMESA'
-      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-      .then((data) => {
-        let obiName = Object.entries(data)[3][1].map(
-          (champion) => champion.name
-        )[9];
-        cardsContentDiv.innerHTML += `
-          <div class="col drop-shadow">
-              <div class="card shadow-sm">
-                <div class="box-image">
-                  <img
-                    class="card-image"
-                    src="./assets/obi-wan.png"
-                    id="obi-wan-image"
-                  />
-                </div>
-                <div class="card-body">
-                  <h2 class="card-title" id="obi-title">${obiName}</h2>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Commodi eum, voluptas reiciendis consequatur natus cum!
-                  </p>
-                  <small class="text-muted"
-                    >Damage: 105 | Lifepoints: 1100 | Side: Light</small
-                  >
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <div class="btn-group">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary select-button"
-                        id="obi-button"
-                      >
-                        Select
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        `;
-      });
-
-    //Boba
-    fetch("https://swapi.dev/api/people/?page=3") //Devuelve un 'OBJETO PROMESA'
-      .then((response) => response.json()) //Lo transformo y devuelve un 'OBJETO TIPO JSON'
-      .then((data) => {
-        let obiName = Object.entries(data)[3][1].map(
-          (champion) => champion.name
-        )[0];
-        cardsContentDiv.innerHTML += `
-          <div class="col drop-shadow">
-              <div class="card shadow-sm">
-                <div class="box-image">
-                  <img
-                    class="card-image"
-                    src="./assets/boba.png"
-                    id="boba-image"
-                  />
-                </div>
-                <div class="card-body">
-                  <h2 class="card-title" id="boba-title">${obiName}</h2>
-                  <p class="card-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Commodi eum, voluptas reiciendis consequatur natus cum!
-                  </p>
-                  <small class="text-muted"
-                    >Damage: 100 | Lifepoints: 1100 | Side: Dark</small
-                  >
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <div class="btn-group">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-outline-secondary select-button"
-                        id="boba-button"
-                      >
-                        Select
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        `;
-      });
+      `;
+        });
+    }
+    championsSelectUI = true;
   });
+
+/*Comentarios sobre el proyecto:
+    - Se decidio realizar las funciones de seleccion de jugadores desde el boton y no con el formato de escuchar el evento de la etiqueta con su respectivo ID
+    ya que al intentarlo de esta ultima forma no se podia localizar el boton con su id, por lo tanto, no se podia ejecutar la funcion de seleccion de jugadores.
+    - LocalStorage: pendiente
+*/
