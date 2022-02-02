@@ -153,7 +153,7 @@ function startGame() {
   console.log(jugadores);
 
   newContent.innerHTML = `
-  <div id="battle-cards-content" class="album py-5 bg-light" style="display: none">
+  <div id="battle-cards-content" class="album py-5" style="display: none">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 battle-cards-div">
         
@@ -169,7 +169,9 @@ function startGame() {
             <div class="card-body">
               <h2 class="card-title"id="${playerOne.nombre}-title">${playerOne.nombre}</h2>
               <p class="card-text">Only some masters who have trained hard possess the power of the special ability...</p>
-              <small class="text-muted" id="card-info-p1"
+              
+              <div class="bottom-card-div">
+                <small class="text-muted" id="card-info-p1"
                   >Damage: ${playerOne.daño} | Lifepoints: ${playerOne.vida}</small
                 >
               <div
@@ -206,6 +208,7 @@ function startGame() {
                   </button>
                 </div>
               </div>
+              </div>
             </div>
           </div>
         </div>
@@ -223,41 +226,43 @@ function startGame() {
               <h2 class="card-title"id="${playerTwo.nombre}-title">${playerTwo.nombre}</h2>
               
               <p class="card-text">Only some masters who have trained hard possess the power of the special ability...</p>
-              <small class="text-muted" id="card-info-p2"
-                  >Damage: ${playerTwo.daño} | Lifepoints: ${playerTwo.vida}</small
+              <div class="bottom-card-div">
+                <small class="text-muted" id="card-info-p2"
+                    >Damage: ${playerTwo.daño} | Lifepoints: ${playerTwo.vida}</small
+                  >
+                <div
+                  class="d-flex justify-content-between align-items-center"
                 >
-              <div
-                class="d-flex justify-content-between align-items-center"
-              >
-                <!-- Attack Button -->
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary select-button"
-                    id="ejecutar-ataque-p2"
-                  >
-                    Attack
-                  </button>
-                </div>
-                <!-- Abillity Button -->
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary select-button"
-                    id="ejecutar-habilidad-p2"
-                  >
-                    Abillity
-                  </button>
-                </div>
-                <!-- Ultimate Button -->
-                <div class="btn-group">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary select-button"
-                    id="ejecutar-habilidad-especial-p2"
-                  >
-                    Ultimate
-                  </button>
+                  <!-- Attack Button -->
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary select-button"
+                      id="ejecutar-ataque-p2"
+                    >
+                      Attack
+                    </button>
+                  </div>
+                  <!-- Abillity Button -->
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary select-button"
+                      id="ejecutar-habilidad-p2"
+                    >
+                      Abillity
+                    </button>
+                  </div>
+                  <!-- Ultimate Button -->
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary select-button"
+                      id="ejecutar-habilidad-especial-p2"
+                    >
+                      Ultimate
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -289,7 +294,7 @@ function startGame() {
     const winnerContent = document.createElement("div");
 
     winnerContent.innerHTML = `
-      <div id="battle-cards-content" class="album py-5 bg-light" >
+      <div id="battle-cards-content" class="album py-5" >
         <div class="container">
         <h2 class="d-flex justify-content-center">Winner</h2>
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 battle-cards-div">
@@ -307,6 +312,7 @@ function startGame() {
                 <div class="card-body">
                   <h2 class="card-title">${winner.nombre}</h2>
                   <p class="card-text">Only some masters who have trained hard possess the power of the special ability...</p>
+                  <div class="bottom-card-div">
                   <small class="text-muted" id="card-info-p1"
                       >Damage: ${winner.daño} | Lifepoints: ${winner.vida}</small
                     >
@@ -343,6 +349,7 @@ function startGame() {
                         Ultimate
                       </button>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -708,6 +715,7 @@ let selectChampionsButton = document
                 <p class="card-text">
                   A Mandalorian warrior and bounty hunter. Clone of the famed Jango Fett, created in 32 BBY as the first of several replicas of Fett designed to become part of the Grand Army of the Republic, and raised by Jango as his son.
                 </p>
+                <div class="bottom-card-div">
                 <small class="text-muted"
                   >Damage: 100 | Lifepoints: 1100 | Side: Dark</small
                 >
@@ -725,6 +733,7 @@ let selectChampionsButton = document
                     </button>
                   </div>
                 </div>
+                </div>
               </div>
             </div>
           </div>
@@ -738,4 +747,5 @@ let selectChampionsButton = document
     - Se decidio realizar las funciones de seleccion de jugadores desde el boton y no con el formato de escuchar el evento de la etiqueta con su respectivo ID
     ya que al intentarlo de esta ultima forma no se podia localizar el boton con su id, por lo tanto, no se podia ejecutar la funcion de seleccion de jugadores.
     - LocalStorage: pendiente
+    - Demora unos segundos el cargar cada card debido a que el fetch se realiza varias veces, falta optimizar.
 */

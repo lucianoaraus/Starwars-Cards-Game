@@ -7,7 +7,17 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat:wght@300", sans-serif;
-  background: #f0f4fb;
+  background: #fff;
+}
+
+#select-champions {
+  width: 200px;
+  height: 50px;
+  font-size: large;
+}
+
+#cards-content {
+  background: #fff;
 }
 
 .card-image {
@@ -18,7 +28,7 @@ body {
 
 .card-body {
   min-height: 305px;
-  max-height: 505px;
+  max-height: 305px;
   background: #212529;
   border-radius: 0 0 3px 3px;
   color: rgb(233, 233, 233);
@@ -49,7 +59,7 @@ body {
 .box-image {
   display: flex;
   justify-content: center;
-  background: #ffff;
+  background: #fff;
   border-radius: 5px 5px;
 }
 
