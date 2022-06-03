@@ -57,7 +57,7 @@ let yoda = new Campeon(
   1500,
   "Luz",
   "yoda-button",
-  "../assets/yoda.png"
+  "./assets/yoda.png"
 );
 let luke = new Campeon(
   "Luke Skywalker",
@@ -65,7 +65,7 @@ let luke = new Campeon(
   1100,
   "Luz",
   "luke-button",
-  "../assets/luke.png"
+  "./assets/luke.png"
 );
 let leia = new Campeon(
   "Leia Organa",
@@ -73,7 +73,7 @@ let leia = new Campeon(
   1000,
   "Luz",
   "leia-button",
-  "../assets/leia.png"
+  "./assets/leia.png"
 );
 let vader = new Campeon(
   "Darth Vader",
@@ -81,7 +81,7 @@ let vader = new Campeon(
   1200,
   "Oscuridad",
   "vader-button",
-  "../assets/vader.png"
+  "./assets/vader.png"
 );
 let obiWan = new Campeon(
   "Obi-Wan Kenobi",
@@ -89,7 +89,7 @@ let obiWan = new Campeon(
   1100,
   "Luz",
   "obi-button",
-  "../assets/obi-wan.png"
+  "./assets/obi-wan.png"
 );
 let boba = new Campeon(
   "Boba Fett",
@@ -97,7 +97,7 @@ let boba = new Campeon(
   1100,
   "Oscuridad",
   "boba-button",
-  "../assets/boba.png"
+  "./assets/boba.png"
 );
 
 const campeones = [yoda, luke, leia, vader, obiWan, boba];
