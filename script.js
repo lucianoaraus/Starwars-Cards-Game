@@ -155,7 +155,9 @@ function startGame() {
   newContent.innerHTML = `
   <div id="battle-cards-content" class="album py-5" style="display: none">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 battle-cards-div">
+      <h3 style="text-align: center">Fight!</h3>
+      </br>  
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 battle-cards-div">  
         
         <!-- Player One  -->
         <div class="col drop-shadow" id="battle-p1">
